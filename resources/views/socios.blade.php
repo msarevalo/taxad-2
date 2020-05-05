@@ -32,7 +32,7 @@
             <a href="{{route('socio.crea')}}" class="btn btn-primary">Crear</a>
         @endif
         @if($permiso[0]->edit==1)
-            <a href="{{route('socio.crea')}}" class="btn btn-primary">Ajustar Ganancias</a>
+            <a href="{{route('socio.configura')}}" class="btn btn-primary">Ajustar Ganancias</a>
         @endif
     </div>
     <h1>Listado Socios:</h1>

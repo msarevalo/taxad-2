@@ -92,6 +92,14 @@ class PartnerController extends Controller
 
                 $socio->save();
 
+                $prueba = App\User::where('username', '=', strtolower($usuario))->first();
+
+                $porcentaje = new App\Percentage;
+                $porcentaje->user_id=$prueba->id;
+                $porcentaje->percentage=0;
+                $porcentaje->state=1;
+                $porcentaje->save();
+
                 return redirect('socios')->with('mensaje', 'Socio ' . $request->name . ' ' . $request->lastname . ' creado con exito');
             }else{
                 return redirect('socios')->with('documento', 'El correo que ingresaste ya existe, verifica los datos');    
@@ -132,9 +140,54 @@ class PartnerController extends Controller
 
             $socio->save();
 
+            if ($request->estado=0) {
+                $porcentaje = App\Percentage::where('user_id', '=', $id)->first();
+                if($porcentaje != null){
+                    $cambio = App\Percentage::findOrFail($porcentaje->id);
+
+                    $cambio->state = 0;
+                    $cambio->save();
+                }
+            }
+
             return redirect('socios')->with('mensaje', 'Se edito el socio con exito');
         }else{
             return redirect('socios')->with('error', 'El correo que intentas registrar ya esta asociado para otro usuario');
         }
+    }
+
+    public function configura(){
+        $verifica = App\User::where([['state', '=', 1], ['profile', '=', 4]])->first();
+
+        if ($verifica!=null) {
+            $socios = DB::table('users')
+                ->join('percentages', 'percentages.user_id', '=', 'users.id')
+                ->select('users.id as id', 'users.name as name', 'percentages.percentage as porcentaje')
+                ->where([['users.state', '=', 1], ['users.profile', '=', 4]])
+                ->get();
+            $porcentajes = App\Percentage::where([['state', '=', 1]])->get();
+
+            $suma = DB::table('percentages')
+                ->select(DB::raw('sum(percentage) as suma'))
+                ->where('state', '=', 1)->get();
+
+            return view('socios.configura', compact('socios', 'porcentajes', 'suma'));
+        }else{
+            return redirect('socios/crear')->with('sinUsuario', 'Necesitas tener al menos un socio activo para configurar las ganancias');
+        }
+    }
+
+    public function configurar(Request $request){
+        $socios = App\User::where([['profile', '=', 4], ['state', '=', 1]])->get();
+        for ($i=0; $i < sizeof($socios); $i++) { 
+            $porcentajes = App\Percentage::where('user_id', '=',$socios[$i]->id)->first();
+
+            $porcentaje = App\Percentage::findOrFail($porcentajes->id);
+
+            $porcentaje->percentage = $request['valor'.$socios[$i]->id];
+            $porcentaje->save();
+        }
+
+        return redirect('socios')->with('mensaje', 'Se ajustaron las ganancias exitosamente');
     }
 }

@@ -177,6 +177,10 @@ Route::get('/socios/editar/{id}', 'PartnerController@editaSocio')->name('socio.e
 
 Route::put('/socios/{id}', 'PartnerController@editarSocio')->name('socio.editar');
 
+Route::get('/socios/configura', 'PartnerController@configura')->name('socio.configura');
+
+Route::post('/socios', 'PartnerController@configurar')->name('socio.configurar');
+
 /*************************************************
  *************************************************
  * Creacion y administracion de Tarifas***********
