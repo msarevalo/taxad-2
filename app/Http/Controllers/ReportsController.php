@@ -14,7 +14,9 @@ class ReportsController extends Controller
 {
     //
     public function reporte(){
-    	return view('reportes');
+    	$socios = App\User::where([['state', '=', 1], ['profile', '=', 4]])->orderBy('name')->get();
+
+    	return view('reportes', compact('socios'));
     }
 
     public function historico(){
@@ -25,5 +27,8 @@ class ReportsController extends Controller
     	return (new Exports\TaxisGastos())->download('GastosTaxis.xlsx');
     }
 
+    public function socios($id){
+    	return (new Exports\TaxisSocios(intval($id)))->download('Ganancias_Socio.xlsx');
+    }
 
 }

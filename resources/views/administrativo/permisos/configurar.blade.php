@@ -10,7 +10,7 @@
 <br>
 @php($largo = sizeof($menus)-1)
 @php($contador=$largo)
-@while($contador%3!=0)
+@while($contador%3 != 0)
 	@php($contador++)
 @endwhile
 @php($fin = $contador-$largo)

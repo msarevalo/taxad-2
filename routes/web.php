@@ -175,7 +175,7 @@ Route::get('/socios', 'PartnerController@socio')->name('socios');
 
 Route::get('/socios/crear', 'PartnerController@creaSocio')->name('socio.crea');
 
-Route::post('/socios', 'PartnerController@crearSocio')->name('socio.crear');
+Route::post('/socios', 'PartnerController@crearSocio')->name('socio.creado');
 
 Route::get('/socios/editar/{id}', 'PartnerController@editaSocio')->name('socio.edita');
 
@@ -183,7 +183,7 @@ Route::put('/socios/{id}', 'PartnerController@editarSocio')->name('socio.editar'
 
 Route::get('/socios/configura', 'PartnerController@configura')->name('socio.configura');
 
-Route::post('/socios', 'PartnerController@configurar')->name('socio.configurar');
+Route::post('/socios/configura', 'PartnerController@configurar')->name('socio.configurar');
 
 /*************************************************
  *************************************************
@@ -348,3 +348,5 @@ Route::get('/reportes', 'ReportsController@reporte')->name('reportes');
 Route::get('/reportes/exporta/historico', 'ReportsController@historico')->name('reportes.excel');
 
 Route::get('/reportes/exporta/gastos', 'ReportsController@gastos')->name('reportes.excel2');
+
+Route::get('/reportes/exporta/socios/{id}', 'ReportsController@socios')->name('reportes.socios');

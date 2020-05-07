@@ -19,7 +19,7 @@
 
       function drawChart() {
         var data = google.visualization.arrayToDataTable([
-          ['Mes', 'Producido', 'Gastos'],
+          ['Mes', 'Entradas', 'Gastos'],
           @foreach($reportes as $reporte)
             ['{{$reporte->año}}-{{$reporte->mes}}', {{$reporte->producido}}, {{$reporte->gastos}}],
           @endforeach

@@ -140,8 +140,8 @@ class PartnerController extends Controller
 
             $socio->save();
 
-            if ($request->estado=0) {
-                $porcentaje = App\Percentage::where('user_id', '=', $id)->first();
+            $porcentaje = App\Percentage::where('user_id', '=', $id)->first();
+            if ($request->estado==0) {
                 if($porcentaje != null){
                     $cambio = App\Percentage::findOrFail($porcentaje->id);
 
@@ -149,7 +149,6 @@ class PartnerController extends Controller
                     $cambio->save();
                 }
             }else{
-                $porcentaje = App\Percentage::where('user_id', '=', $id)->first();
                 if($porcentaje != null){
                     $cambio = App\Percentage::findOrFail($porcentaje->id);
 
