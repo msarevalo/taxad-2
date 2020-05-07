@@ -27,6 +27,10 @@ class HomeController extends Controller
     public function index()
     {   
         $permiso = App\Permission::where([['menu', '=', 2], ['profile', '=', Auth::user()->profile]])->get();
-        return view('home', compact('permiso'));
+        $reportes = App\Record::select(DB::raw('YEAR(begin) as año'), DB::raw('MONTH(begin) as mes'), DB::raw('sum(payment) as producido'), DB::raw('sum(expenses) as gastos'))->groupBy(DB::raw('YEAR(begin)'))->groupBy(DB::raw('MONTH(begin)'))->orderBy('año', 'desc')->orderBy('mes', 'desc')->take(12)->get();
+        /*permisos = DB::table('notifications')
+                        ->select(DB::raw('count(id) as conteo'))
+                        ->where('readers', 'NOT LIKE', '%'.$id.'%')->orWhereNull('readers')->get();*/
+        return view('home', compact('permiso', 'reportes'));
     }
 }

@@ -16,6 +16,7 @@ class CreateRecordsTable extends Migration
         Schema::create('records', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->integer('vehicle');
+            $table->integer('week');
             $table->date('begin');
             $table->date('end');
             $table->string('sunday');

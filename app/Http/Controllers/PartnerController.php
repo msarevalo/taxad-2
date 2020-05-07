@@ -148,6 +148,15 @@ class PartnerController extends Controller
                     $cambio->state = 0;
                     $cambio->save();
                 }
+            }else{
+                $porcentaje = App\Percentage::where('user_id', '=', $id)->first();
+                if($porcentaje != null){
+                    $cambio = App\Percentage::findOrFail($porcentaje->id);
+
+                    $cambio->state = 1;
+                    $cambio->percentage = 0;
+                    $cambio->save();
+                }
             }
 
             return redirect('socios')->with('mensaje', 'Se edito el socio con exito');

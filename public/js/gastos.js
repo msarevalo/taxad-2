@@ -78,6 +78,12 @@ function ciclo(valor, inicio){
     				'</div>' +
 				'</div>' +
 				'<div class="form-group row">' +
+    				'<label for="pagoa" class="col-md-4 col-form-label text-md-right">Pagado a</label>' +
+					'<div class="col-md-6">' + 
+        				'<input id="pagoa' + i + '" type="text" class="form-control" name="pagoa' + i + '" required autofocus">' +
+    				'</div>' +
+				'</div>' +
+				'<div class="form-group row">' +
 					'<label for="categoria-'+i+'" class="col-md-4 col-form-label text-md-right">Valor del gasto</label>' +
 					'<div class="col-md-6" style="display: inline-block; width: 100%">' +
 						'<div class="input-group">' +

@@ -14,6 +14,8 @@
     <a class="btn btn-light"  href="{{ route('taxis') }}">Atras</a>
     <a class="btn btn-info"  href="{{ route('taxi.edita', $taxi->id) }}">Editar</a>
     <a class="btn btn-primary"  href="{{ route('taxi.reporta', $taxi->id) }}">Reportar</a>
+    <a class="btn btn-success" style="text-transform: none;" href="{{route('taxi.excel', $taxi->id)}}" title="Se bajara el historico sin filtro">Exportar Ingresos y Gastos</a>
+    <a class="btn btn-success" style="text-transform: none;" href="{{route('taxi.excelGastos', $taxi->id)}}" title="Se bajara el historico sin filtro">Exportar Gastos</a>
     <div id="cabecera">
     <h3>Detalle del taxi {{$taxi->plate}}:</h3>
     <table class="table col-8">
@@ -76,7 +78,6 @@
             @php($fin="null")
           @endif
           <a onclick="imprimir('{{$taxi->id}}', '{{$inicio}}', '{{$fin}}')" class="btn btn-primary" style="text-transform: none;">Imprimir</a>
-          <a class="btn btn-success" style="text-transform: none;" href="{{route('taxi.excel', $taxi->id)}}">Exportar</a>
         </center>
       </form>
     </div>
@@ -98,7 +99,7 @@
         ]);
 
         var options = {
-          title : 'Producido vs Gastos - Ultimos 4 registros',
+          title : 'Producido vs Gastos',
           vAxis: {title: 'Dinero'},
           hAxis: {title: 'Semana'},
           seriesType: 'bars',

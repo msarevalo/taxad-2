@@ -10,10 +10,8 @@
     </div>
 @endif
 <div class="container" onloadeddata="notificaciones()">
-    <div class="row justify-content-center">
+    <div class="row justify-content">
         <div class="col-md-8">
-            <html>
-  <head>
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
     <script type="text/javascript">
       google.charts.load('current', {'packages':['corechart']});
@@ -22,16 +20,14 @@
       function drawChart() {
         var data = google.visualization.arrayToDataTable([
           ['Mes', 'Producido', 'Gastos'],
-          ['Diciembre\n2019',  1000,      400],
-          ['Enero\n2020',  1000,      400],
-          ['Febrero\n2020',  1170,      460],
-          ['Marzo\n2020',  660,       1120],
-          ['Abril\n2020',  1030,      540]
+          @foreach($reportes as $reporte)
+            ['{{$reporte->año}}-{{$reporte->mes}}', {{$reporte->producido}}, {{$reporte->gastos}}],
+          @endforeach
         ]);
 
         var options = {
-          title: 'Company Performance',
-          hAxis: {title: 'Year',  titleTextStyle: {color: '#333'}},
+          title: 'Producido vs Gastos',
+          hAxis: {title: 'Mes',  titleTextStyle: {color: '#333'}},
           vAxis: {minValue: 0}
         };
 
@@ -39,16 +35,15 @@
         chart.draw(data, options);
       }
     </script>
-  </head>
-  <body>
-    @if($permiso[0]->read==1)
-    <div id="chart_div" style="width: 100%; height: 500px;"></div>
+    @if(sizeof($reportes)==0)
+      <center><img src="../img/logo500x500.png" style="width: 300px; margin-left: 200px; margin-top: 100px"></center>
     @else
-      <center><img src="../img/logo500x500.png" style="width: 300px;"></center>
+      @if($permiso[0]->read==1)
+        <div id="chart_div" style="width: 1000px; height: 500px;"></div>
+      @else
+        <center><img src="../img/logo500x500.png" style="width: 300px;"></center>
+      @endif
     @endif
-  </body>
-</html>
-
         </div>
     </div>
 </div>

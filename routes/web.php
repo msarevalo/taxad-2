@@ -105,7 +105,9 @@ Route::get('/taxis/gastos/{id}/{w}/{val}', 'TaxisController@gastos')->name('taxi
 
 Route::post('/taxis/gasto/{id}', 'TaxisController@gastosIngresar')->name('taxi.gastos');
 
-Route::get('/taxis/detalle/{id}', 'TaxisController@excel')->name('taxi.excel');
+Route::get('/taxi/exporta/historico/{id}', 'TaxisController@excel')->name('taxi.excel');
+
+Route::get('/taxi/exporta/gastos/{id}', 'TaxisController@excelGastos')->name('taxi.excelGastos');
 
 
 /**********************************************
@@ -332,3 +334,11 @@ Route::put('/servicios/tipos/{id}', 'ServicesController@tiposEditar')->name('tip
  *************************************************/
 
 Route::get('/administrativo/legales', 'LegalsController@legales')->name('legales');
+
+/*************************************************
+ *************************************************
+ * Creacion y administracion de Reportes**********
+ *************************************************
+ *************************************************/
+
+Route::get('/reportes', 'ReportsController@reporte')->name('reportes');

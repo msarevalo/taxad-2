@@ -7,8 +7,8 @@ use App;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
-use Excel;
-
+use Maatwebsite\Excel\Facades\Excel;
+use App\Exports;
 class TaxisController extends Controller
 {
     //
@@ -346,7 +346,14 @@ class TaxisController extends Controller
         $taxi = App\Taxi::findOrFail($id);
         $tarifas = App\Rate::get();
 
-        return view('taxis/reportar', compact('taxi', 'tarifas', '$id'));
+        $verifica = App\TaxiDriver::where([['state', '=', 1], ['idTaxi', '=', $id]])->first();
+
+        if ($verifica!==null) {
+            return view('taxis/reportar', compact('taxi', 'tarifas', '$id'));
+        }else{
+            return redirect('taxis/asigna/'.$id)->with('error', 'Es la asignacion de un condutor');
+        }
+
     }
 
     public function reportar(Request $request, $id){
@@ -356,6 +363,7 @@ class TaxisController extends Controller
             
             $reporte = new App\Record();
             $reporte->vehicle=$id;
+            $reporte->week=date('W', strtotime($request->inicio));
             $reporte->begin=$request->inicio;
             $reporte->end=date('Y-m-d', strtotime($request->inicio.'+ 6 days'));
             $reporte->sunday=$request->producidoD . ';' . $request->gastosD . ';' . $request->otrosD;
@@ -412,10 +420,12 @@ class TaxisController extends Controller
 
                 $gasto = new App\Expense();
                 $gasto->vehicle=$identificador[0];
+                $gasto->week=date('W', strtotime($identificador[1]));
                 $gasto->begin=$identificador[1];
                 $gasto->end=date('Y-m-d', strtotime($identificador[1].'+ 6 days'));
                 $gasto->date=$request['fecha'.$i];
                 $gasto->value=$request['valor'.$i];
+                $gasto->pay_to=$request['pagoa'.$i];
                 $gasto->category=$request['categoria'.$i];
                 $gasto->description=$request['descripcion'.$i];
                 $gasto->other=$request['otros'.$i];
@@ -439,19 +449,13 @@ class TaxisController extends Controller
 
     }
 
-    public function excel(){
-        $taxis = App\Taxi::get()->toArray();
+    public function excel($id){
+        //return Excel::download(new TaxiExport,'taxi.xlsx');
+        return (new Exports\TaxiExport(intval($id)))->download('taxis_historico.xlsx');
+    }
 
-        $prueba[] = array('id', 'placa', 'marca', 'modelo', 'serie', 'estado'); 
-
-        foreach ($taxis as $taxi) {
-            $prueba[] = array('id' => $taxi->id, 'placa' => $taxi->plate, 'marca' => $taxi->brand, 'modelo' => $taxi->makes, 'serie' => $taxi->serie, 'estado' => $taxi->state);
-        }
-        return Excel::create('Probando Excel', function($excel) use ($prueba){
-            $excel->setTitle('Probando Excel');
-            $excel->sheet('Probando Excel', function($sheet) use ($prueba){
-                $sheet->fromArray($prueba, null, 'A1', false, false);
-            });
-        });
+    public function excelGastos($id){
+        //return Excel::download(new TaxiExport,'taxi.xlsx');
+        return (new Exports\TaxiGastos(intval($id)))->download('taxis_gastos.xlsx');
     }
 }

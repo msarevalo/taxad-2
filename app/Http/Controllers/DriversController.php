@@ -170,6 +170,7 @@ class DriversController extends Controller
             }
 
             return redirect('conductores')->with('mensaje', 'Conductor ' . $request->name . ' actualizado con exito');
+        }
         else{
             return redirect('conductores')->with('mensaje', 'El correo que intentas registrar ya se encuentra asociado a otro usuario');
         }

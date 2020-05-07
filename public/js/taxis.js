@@ -40,11 +40,14 @@ function imprimir(id, inicio, fin){
 			var histograma = document.getElementById("chart_div_histograma").innerHTML;
 			var histograma1 = document.getElementById("chart_div_histograma_gasto").innerHTML;
     		var a = window.open('', '', 'height=700, width=700'); 
-        	a.document.write('<html>'); 
+        	a.document.write('<html>');
         	a.document.write("<center>" + cabecera + "</center>"); 
         	a.document.write("<div style='width:30%'>" + divContents + "</div>");
-        	a.document.write("<div style='width:30%'>" + histograma + tabla_cantidades +"</div>");
-        	a.document.write("<div style='width:30%'>" + histograma1 + tabla_gastos +"</div>");
+        	a.document.write("<div style='width:30%'>" + histograma +"</div>");
+        	a.document.write("<div style='width:30%'>" + histograma1 + "</div>");
+        	if(data.length!==0){
+        		a.document.write("<div style='width:30%'>" + tabla_cantidades +"</div>");
+        	}
         	a.document.write('</body></html>'); 
         	a.document.close(); 
         	a.print();

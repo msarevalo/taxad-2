@@ -20,9 +20,10 @@ class Home extends Controller
         	return view('/cambio');
         }else{
             $permiso = App\Permission::where([['menu', '=', 2], ['profile', '=', Auth::user()->profile]])->get();
+            $reportes = App\Record::select(DB::raw('YEAR(begin) as año'), DB::raw('MONTH(begin) as mes'), DB::raw('sum(payment) as producido'), DB::raw('sum(expenses) as gastos'))->groupBy(DB::raw('YEAR(begin)'))->groupBy(DB::raw('MONTH(begin)'))->orderBy('año', 'desc')->orderBy('mes', 'desc')->take(12)->get();
             if (count($permiso)) {
                 # code...
-                return view('/home', compact('permiso'));
+                return view('/home', compact('permiso', 'reportes'));
             }else{
                 return redirect('logout');
             }

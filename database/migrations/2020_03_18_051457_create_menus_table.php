@@ -26,7 +26,7 @@ class CreateMenusTable extends Migration
         });
 
         DB::table('menus')->insert(array('id'=>'1', 'name'=>'Perfil', 'route'=>'/perfil', 'submenu'=>0, 'parent'=>0, 'class'=>'fa fa-address-card-o', 'order'=>-99));
-        DB::table('menus')->insert(array('id'=>'2', 'name'=>'Dashboard', 'route'=>'/home', 'submenu'=>0, 'parent'=>0, 'class'=>'fa fa-line-chart', 'order'=>2));
+        DB::table('menus')->insert(array('id'=>'2', 'name'=>'Dashboard', 'route'=>'/home', 'submenu'=>0, 'parent'=>0, 'class'=>'fa fa-tachometer', 'order'=>2));
         DB::table('menus')->insert(array('id'=>'3', 'name'=>'Administrativo', 'submenu'=>0, 'class'=>'fa fa-cogs', 'order'=>3));
         DB::table('menus')->insert(array('id'=>'4', 'name'=>'Menús', 'route'=>'/administrativo/menus', 'submenu'=>1, 'parent'=>3, 'order'=>4));
         DB::table('menus')->insert(array('id'=>'5', 'name'=>'Separadores', 'route'=>'/administrativo/separadores', 'submenu'=>1, 'parent'=>3, 'order'=>5));
@@ -46,7 +46,7 @@ class CreateMenusTable extends Migration
         DB::table('menus')->insert(array('id'=>'17', 'name'=>'Vehiculos', 'route'=>'/taxis', 'submenu'=>1, 'parent'=>12, 'order'=>17));
         DB::table('menus')->insert(array('id'=>'18', 'name'=>'Calendario', 'route'=>'/calendario', 'submenu'=>0, 'parent'=>0, 'class'=>'fa fa-calendar', 'order'=>18));
         DB::table('menus')->insert(array('id'=>'19', 'name'=>'Notificaciones', 'route'=>'/buzon', 'submenu'=>0, 'parent'=>0, 'class'=>'fa fa-envelope', 'order'=>19));
-        DB::table('menus')->insert(array('id'=>'20', 'name'=>'Reportes', 'route'=>'#', 'submenu'=>0, 'parent'=>0, 'class'=>'fa fa-question-circle', 'order'=>13));
+        DB::table('menus')->insert(array('id'=>'20', 'name'=>'Reportes', 'route'=>'/reportes', 'submenu'=>0, 'parent'=>0, 'class'=>'fa fa-bar-chart', 'order'=>13));
         DB::table('menus')->insert(array('id'=>'21', 'name'=>'Cerrar Sesión', 'route'=>'logout', 'submenu'=>0, 'parent'=>0, 'class'=>'fa fa-sign-out', 'order'=>99));
 
 
