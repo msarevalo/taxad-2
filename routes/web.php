@@ -109,6 +109,8 @@ Route::get('/taxi/exporta/historico/{id}', 'TaxisController@excel')->name('taxi.
 
 Route::get('/taxi/exporta/gastos/{id}', 'TaxisController@excelGastos')->name('taxi.excelGastos');
 
+Route::delete('/taxis/detalle/{id}', 'TaxisController@eliminarReporte')->name('taxi.eliminar');
+
 
 /**********************************************
  **********************************************
@@ -342,3 +344,7 @@ Route::get('/administrativo/legales', 'LegalsController@legales')->name('legales
  *************************************************/
 
 Route::get('/reportes', 'ReportsController@reporte')->name('reportes');
+
+Route::get('/reportes/exporta/historico', 'ReportsController@historico')->name('reportes.excel');
+
+Route::get('/reportes/exporta/gastos', 'ReportsController@gastos')->name('reportes.excel2');

@@ -51,32 +51,34 @@ class TaxisController extends Controller
 
         $categorias = App\ExpenseCategory::orderBy('category', 'asc')->get();
 
+        $reportes = App\Record::where('vehicle', '=', $id)->paginate(5);
+
         if (($inicio==null && $fin==null) || ($inicio=='null' && $fin=='null')) {
             $cantidades = DB::table('expenses')
-                ->join('expense_categories', 'expenses.category', '=', 'expense_categories.id')
-                ->select('expense_categories.category as nombre', DB::raw('count(expenses.id) as conteo'))
+                ->join('expense_categories', 'expense_categories.id', '=', 'expenses.category')
+                ->select('expense_categories.category as nombre', DB::raw('COUNT(expenses.id) as conteo'))
                 ->groupBy('expense_categories.category')
-                ->orderBy('expense_categories.category')->get();
+                ->orderBy('expense_categories.category')->where('expenses.deleted_at', '=', null)->get();
 
             $gastos = DB::table('expenses')
                 ->join('expense_categories', 'expenses.category', '=', 'expense_categories.id')
                 ->select('expense_categories.category as nombre', DB::raw('sum(expenses.value) as conteo'))
                 ->groupBy('expense_categories.category')
-                ->orderBy('expense_categories.category')->get();
+                ->orderBy('expense_categories.category')->where('deleted_at', '=', null)->get();
 
             $registros = App\Record::where('vehicle', '=', $id)->orderBy('begin', 'desc')->limit(4)->get();
         }elseif ($inicio!=null && $fin=="null") {
             $cantidades = DB::table('expenses')
                 ->join('expense_categories', 'expenses.category', '=', 'expense_categories.id')
                 ->select('expense_categories.category as nombre', DB::raw('count(expenses.id) as conteo'))
-                ->where('expenses.date', '>=', $inicio)
+                ->where([['expenses.date', '>=', $inicio], ['deleted_at', '=', null]])
                 ->groupBy('expense_categories.category')
                 ->orderBy('expense_categories.category')->get();
 
             $gastos = DB::table('expenses')
                 ->join('expense_categories', 'expenses.category', '=', 'expense_categories.id')
                 ->select('expense_categories.category as nombre', DB::raw('sum(expenses.value) as conteo'))
-                ->where('expenses.date', '>=', $inicio)
+                ->where([['expenses.date', '>=', $inicio], ['deleted_at', '=', null]])
                 ->groupBy('expense_categories.category')
                 ->orderBy('expense_categories.category')->get();
 
@@ -88,14 +90,14 @@ class TaxisController extends Controller
             $cantidades = DB::table('expenses')
                 ->join('expense_categories', 'expenses.category', '=', 'expense_categories.id')
                 ->select('expense_categories.category as nombre', DB::raw('count(expenses.id) as conteo'))
-                ->where('expenses.date', '<=', $fin)
+                ->where([['expenses.date', '<=', $fin], ['deleted_at', '=', null]])
                 ->groupBy('expense_categories.category')
                 ->orderBy('expense_categories.category')->get();
 
             $gastos = DB::table('expenses')
                 ->join('expense_categories', 'expenses.category', '=', 'expense_categories.id')
                 ->select('expense_categories.category as nombre', DB::raw('sum(expenses.value) as conteo'))
-                ->where('expenses.date', '<=', $fin)
+                ->where([['expenses.date', '<=', $fin], ['deleted_at', '=', null]])
                 ->groupBy('expense_categories.category')
                 ->orderBy('expense_categories.category')->get();
 
@@ -108,6 +110,7 @@ class TaxisController extends Controller
                 ->join('expense_categories', 'expenses.category', '=', 'expense_categories.id')
                 ->select('expense_categories.category as nombre', DB::raw('count(expenses.id) as conteo'))
                 ->whereBetween('expenses.date', [$inicio, $fin])
+                ->where('deleted_at', '=', null)
                 ->groupBy('expense_categories.category')
                 ->orderBy('expense_categories.category')->get();
 
@@ -115,6 +118,7 @@ class TaxisController extends Controller
                 ->join('expense_categories', 'expenses.category', '=', 'expense_categories.id')
                 ->select('expense_categories.category as nombre', DB::raw('sum(expenses.value) as conteo'))
                 ->whereBetween('expenses.date', [$inicio, $fin])
+                ->where('deleted_at', '=', null)
                 ->groupBy('expense_categories.category')
                 ->orderBy('expense_categories.category')->get();
 
@@ -123,7 +127,7 @@ class TaxisController extends Controller
                 ->whereBetween('records.begin', [$inicio, $fin])
                 ->get();
         }
-        return view('taxis.detalle', compact('taxi', 'marcas', 'conductores', 'registros', 'cantidades', 'categorias', 'gastos', 'inicio', 'fin'));
+        return view('taxis.detalle', compact('taxi', 'marcas', 'conductores', 'registros', 'cantidades', 'categorias', 'gastos', 'inicio', 'fin', 'reportes'));
     }
 
     public function creaTax(){
@@ -394,6 +398,25 @@ class TaxisController extends Controller
         }else{
             return redirect('taxis/reporta/' . $id)->with('error', 'Ya se encuentra un registro para esta semana con este vehiculo');
         }
+    }
+
+    public function eliminarReporte($id){
+        $reporte = App\Record::where('id', '=', $id)->first();
+
+        $gastos = App\Expense::where([['begin', '=', $reporte->begin], ['end', '=', $reporte->end]])->get();
+
+        $elimina_reporte = App\Record::findOrFail($id);
+
+        $elimina_reporte->delete();
+
+        foreach ($gastos as $gasto) {
+            $elimina_gasto = App\Expense::findOrFail($gasto->id);
+
+            $elimina_gasto->delete();   
+        }
+
+        return redirect('taxis')->with('mensaje', 'Registro eliminado correctamente');
+
     }
 
     public function gastos($id, $w, $val){

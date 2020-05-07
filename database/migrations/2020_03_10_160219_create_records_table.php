@@ -30,6 +30,7 @@ class CreateRecordsTable extends Migration
             $table->integer('expenses');
             $table->integer('payment');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

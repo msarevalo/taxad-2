@@ -67,3 +67,4 @@ function imprimir(id, inicio, fin){
         a.document.close(); 
         a.print(); */
 }
+
