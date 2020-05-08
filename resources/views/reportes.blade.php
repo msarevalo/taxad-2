@@ -3,12 +3,6 @@
 <title>Taxad | Reportes</title>
 
 @section('formulario')
-@php($largo = sizeof($socios)-1)
-@php($contador=$largo)
-@while($contador%4 != 0)
-	@php($contador++)
-@endwhile
-@php($fin = $contador-$largo)
 <table align="center" style="border-spacing: 30px 15px; border-collapse: separate; margin-top: 40px;">
 	<tbody>
 		<tr>
@@ -35,6 +29,14 @@
 		</tr>
 	</tbody>
 </table>
+@if(isset($socios))
+@php($largo = sizeof($socios)-1)
+@php($contador=$largo)
+@while($contador%4 != 0)
+	@php($contador++)
+@endwhile
+@php($fin = $contador-$largo)
+@if(sizeof($socios)!=0)
 <table align="center" style="border-spacing: 30px 15px; border-collapse: separate;">
 	<tbody>
 		@for($i=0;$i <=$contador;$i=$i+4)
@@ -95,6 +97,8 @@
 		@endfor
 	</tbody>
 </table>
+@endif
+@endif
 <style type="text/css">
 	.cajas{
 		border-top: 1px solid;

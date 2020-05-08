@@ -337,6 +337,10 @@ Route::put('/servicios/tipos/{id}', 'ServicesController@tiposEditar')->name('tip
 
 Route::get('/administrativo/legales', 'LegalsController@legales')->name('legales');
 
+Route::put('/administrativo/legales/tratamiento', 'LegalsController@tratamiento')->name('legales.tratamiento');
+
+Route::put('/administrativo/legales/terminos', 'LegalsController@terminos')->name('legales.terminos');
+
 /*************************************************
  *************************************************
  * Creacion y administracion de Reportes**********
@@ -350,3 +354,5 @@ Route::get('/reportes/exporta/historico', 'ReportsController@historico')->name('
 Route::get('/reportes/exporta/gastos', 'ReportsController@gastos')->name('reportes.excel2');
 
 Route::get('/reportes/exporta/socios/{id}', 'ReportsController@socios')->name('reportes.socios');
+
+Route::get('/reportes/correo', 'ReportsController@correo')->name('correo');
