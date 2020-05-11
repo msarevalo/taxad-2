@@ -16,7 +16,13 @@ class LegalsController extends Controller
 
     	$terminos = App\Term::first();
 
-    	return view('legales', compact('tratamiento', 'terminos'));
+        $permiso = App\Permission::where([['menu', '=', 23], ['profile', '=', Auth::user()->profile]])->get();
+
+        if ($permiso[0]->read) {
+            return view('legales', compact('tratamiento', 'terminos', 'permiso'));
+        }else{
+            return redirect('home')->with('error', 'No tienes permisos para este contenido');
+        }
     }
 
     public function tratamiento(Request $request){

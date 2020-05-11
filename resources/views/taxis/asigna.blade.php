@@ -15,7 +15,7 @@
             @csrf
             <input type="text" name="placa" value="{{$taxi->plate}}" disabled class="form-control mb-2" required>
             <select style="text-transform: capitalize" name="idCond[]" class="form-control mb-2" multiple="multiple" required>
-                <option selected disabled>Seleccione una opcion</option>
+                <option selected disabled value="">Seleccione una opcion</option>
                 @foreach($conductores as $conductor)
                     <option style="text-transform: capitalize" value="{{$conductor->id}}">{{$conductor->name}} {{$conductor->lastname}}</option>
                 @endforeach

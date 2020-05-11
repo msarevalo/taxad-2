@@ -9,6 +9,10 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Exports;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Cache;
+use Response;
+
 class TaxisController extends Controller
 {
     //
@@ -127,7 +131,16 @@ class TaxisController extends Controller
                 ->whereBetween('records.begin', [$inicio, $fin])
                 ->get();
         }
-        return view('taxis.detalle', compact('taxi', 'marcas', 'conductores', 'registros', 'cantidades', 'categorias', 'gastos', 'inicio', 'fin', 'reportes'));
+
+        $permiso = App\Permission::where([['menu', '=', 17], ['profile', '=', Auth::user()->profile]])->get();
+
+        $reportePermiso = App\Permission::where([['menu', '=', 20], ['profile', '=', Auth::user()->profile]])->get();
+
+        if ($permiso[0]->read) {
+            return view('taxis.detalle', compact('taxi', 'marcas', 'conductores', 'registros', 'cantidades', 'categorias', 'gastos', 'inicio', 'fin', 'reportes', 'permiso', 'reportePermiso'));
+        }else{
+            return redirect('home')->with('error', 'No tienes permisos para este contenido');
+        }
     }
 
     public function creaTax(){
@@ -135,11 +148,16 @@ class TaxisController extends Controller
         $marca = App\TaxiBrand::where('state', '=', 1)->first();
 
         //var_dump($marca);
+        $permiso = App\Permission::where([['menu', '=', 17], ['profile', '=', Auth::user()->profile]])->get();
 
-        if ($marca!==null) {
-            return view('taxis.create', compact('marcas'));
+        if ($permiso[0]->create) {
+            if ($marca!==null) {
+                return view('taxis.create', compact('marcas'));
+            }else{
+                return redirect('marcas/create')->with('sinMarca', 'Es necesario la creacion de una marca para poder crear un vehiculo');
+            }
         }else{
-            return redirect('marcas/create')->with('sinMarca', 'Es necesario la creacion de una marca para poder crear un vehiculo');
+            return redirect('home')->with('error', 'No tienes permisos para este contenido');
         }
 
     }
@@ -187,9 +205,16 @@ class TaxisController extends Controller
 
         $to = App\Document::where([['vehicle', '=', $id], ['type', '=', '3']])->orderBy('created_at', 'desc')->first();
 
+
         $rt = App\Document::where([['vehicle', '=', $id], ['type', '=', '4']])->orderBy('created_at', 'desc')->first();
 
-        return view('taxis.edita', compact('taxi', 'marcas', 'conductores', 'asignacion', 'soat', 'tp', 'to', 'rt'));
+        $permiso = App\Permission::where([['menu', '=', 17], ['profile', '=', Auth::user()->profile]])->get();
+
+        if ($permiso[0]->edit) {
+            return view('taxis.edita', compact('taxi', 'marcas', 'conductores', 'asignacion', 'soat', 'tp', 'to', 'rt', 'url_soat'));
+        }else{
+            return redirect('home')->with('error', 'No tienes permisos para este contenido');
+        }
     }
 
     public function editarTax(Request $request, $id){
@@ -243,16 +268,6 @@ class TaxisController extends Controller
     public function asignaTax($id){
         $taxi = App\Taxi::findOrFail($id);
 
-        //$conductores = App\User::where([['profile', '=', 3], ['state', '=', 1]])->get();
-
-        //$con = App\TaxiDriver::where('state', '=', 1)->get();
-
-        /*$prueba = App\User::whereNotExists(function($query){
-            $query->select('taxi_drivers.idDriver')
-                ->from('taxi_drivers')
-                ->where([['taxi_drivers.idDriver', '=', 'users.id'], ['state', '=', 1]]);
-        })->where([['profile', '=', 3], ['state', '=', 1]])->get();
-*/      
         $conductores = DB::table('users')
             ->where([['profile', '=', 3], ['state', '=', 1]])
             ->whereNotExists(function($query){
@@ -263,14 +278,14 @@ class TaxisController extends Controller
             ->orderBy('users.name', 'asc')
             ->get();
 
-        /*echo sizeof($prueba) . "<br>";
-
-        for ($i=0; $i < sizeof($prueba); $i++) { 
-            echo $prueba[$i]->name . "<br>";
-        }*/
-
         if (sizeof($conductores)!=0) {
-            return view('taxis.asigna', compact('taxi', 'conductores'));
+            $permiso = App\Permission::where([['menu', '=', 17], ['profile', '=', Auth::user()->profile]])->get();
+
+            if ($permiso[0]->edit) {
+                return view('taxis.asigna', compact('taxi', 'conductores'));
+            }else{
+                return redirect('home')->with('error', 'No tienes permisos para este contenido');
+            }
         }else{
             return redirect('conductores/create')->with('sinUsuario', 'Es necesario la creacion de un conductor para poder asignar un vehiculo');
         }
@@ -316,7 +331,13 @@ class TaxisController extends Controller
         $taxi = App\Taxi::findOrFail($id);
         $tipos = App\DocumentType::all();
 
-        return view('taxis/documento', compact('taxi', 'tipos'));
+        $permiso = App\Permission::where([['menu', '=', 17], ['profile', '=', Auth::user()->profile]])->get();
+
+        if ($permiso[0]->edit) {
+            return view('taxis/documento', compact('taxi', 'tipos'));
+        }else{
+            return redirect('home')->with('error', 'No tienes permisos para este contenido');
+        }
     }
 
     public function cargarDocumento(Request $request, $id){
@@ -325,16 +346,22 @@ class TaxisController extends Controller
             $file = $request->file('soat');
             if ($request->tipo==1) {
                 $name = 'soat-'.$id.'-'.time().'.pdf';
-                $file->move(public_path().'/documentos/soat/', $name);
+                //$file->move(public_path().'/documentos/soat/', $name);
+                //$file->store('/documentos/prueba', 'public');
+                Storage::disk('s3')->putFileAs('/Documentos/soat/', $file, $name);
+                //echo $url;
             }elseif ($request->tipo==2) {
                 $name = 'tp-'.$id.'-'.time().'.pdf';
-                $file->move(public_path().'/documentos/tp/', $name);
+                //$file->move(public_path().'/documentos/tp/', $name);
+                Storage::disk('s3')->putFileAs('/Documentos/tp/', $file, $name);
             }elseif($request->tipo==3){
                 $name = 'to-'.$id.'-'.time().'.pdf';
-                $file->move(public_path().'/documentos/to/', $name);
+                //$file->move(public_path().'/documentos/to/', $name);
+                Storage::disk('s3')->putFileAs('/Documentos/to/', $file, $name);
             }else{
                 $name = 'rt-'.$id.'-'.time().'.pdf';
-                $file->move(public_path().'/documentos/rt/', $name);
+                //$file->move(public_path().'/documentos/rt/', $name);
+                Storage::disk('s3')->putFileAs('/Documentos/rt/', $file, $name);
             }
         }
         $documento = new App\Document();
@@ -353,7 +380,13 @@ class TaxisController extends Controller
         $verifica = App\TaxiDriver::where([['state', '=', 1], ['idTaxi', '=', $id]])->first();
 
         if ($verifica!==null) {
-            return view('taxis/reportar', compact('taxi', 'tarifas', '$id'));
+            $permiso = App\Permission::where([['menu', '=', 17], ['profile', '=', Auth::user()->profile]])->get();
+
+            if ($permiso[0]->create) {
+                return view('taxis/reportar', compact('taxi', 'tarifas', '$id'));
+            }else{
+                return redirect('home')->with('error', 'No tienes permisos para este contenido');
+            }
         }else{
             return redirect('taxis/asigna/'.$id)->with('error', 'Es la asignacion de un condutor');
         }
@@ -415,7 +448,13 @@ class TaxisController extends Controller
             $elimina_gasto->delete();   
         }
 
-        return redirect('taxis')->with('mensaje', 'Registro eliminado correctamente');
+        $permiso = App\Permission::where([['menu', '=', 17], ['profile', '=', Auth::user()->profile]])->get();
+
+        if ($permiso[0]->delete) {
+            return redirect('taxis')->with('mensaje', 'Registro eliminado correctamente');
+        }else{
+            return redirect('home')->with('error', 'No tienes permisos para este contenido');
+        }
 
     }
 
@@ -423,7 +462,13 @@ class TaxisController extends Controller
         $categorias = App\ExpenseCategory::where('state', '=', 1)->get();
         $descripciones = App\ExpenseDescription::where('state', '=', 1)->get();
 
-        return view('taxis/gastos', compact('id', 'w', 'val', 'categorias', 'descripciones'));
+        $permiso = App\Permission::where([['menu', '=', 17], ['profile', '=', Auth::user()->profile]])->get();
+
+        if ($permiso[0]->create) {
+            return view('taxis/gastos', compact('id', 'w', 'val', 'categorias', 'descripciones'));
+        }else{
+            return redirect('home')->with('error', 'No tienes permisos para este contenido');
+        }
     }
 
     public function gastosIngresar(Request $request, $id){
@@ -436,7 +481,9 @@ class TaxisController extends Controller
                 if ($request->hasFile('factura' . $i)) {
                     $file = $request->file('factura' . $i);
                     $name = 'factura-'.$identificador[0].'-'.time(). '-' . $i .'.pdf';
-                    $file->move(public_path().'/documentos/facturas/', $name);
+                    //$file->move(public_path().'/documentos/facturas/', $name);
+
+                    Storage::disk('s3')->putFileAs('/Documentos/facturas/', $file, $name);
                 }else{
                     $name="fallo";
                 }
@@ -472,6 +519,23 @@ class TaxisController extends Controller
 
     }
 
+    public function detalleGasto($id, $w){
+        $gastos = App\Expense::where([['vehicle', '=', $id], ['week', '=', $w], ['deleted_at', '=', null]])
+            ->join('expense_categories', 'expense_categories.id', '=', 'expenses.category')
+            ->join('expense_descriptions', 'expense_descriptions.id', '=', 'expenses.description')
+            ->select('expenses.date as date', 'expenses.value as value', 'expenses.pay_to as pay_to', 'expense_categories.category as category', 'expense_descriptions.description as description', 'expenses.bill')
+            ->get();
+        $reporte = App\Record::select('expenses')->where([['vehicle', '=', $id], ['week', '=', $w], ['deleted_at', '=', null]])->get();
+
+        $permiso = App\Permission::where([['menu', '=', 17], ['profile', '=', Auth::user()->profile]])->get();
+
+        if ($permiso[0]->read) {
+            return view('taxis.detalleGasto', compact('id', 'w', 'gastos', 'reporte'));
+        }else{
+            return redirect('home')->with('error', 'No tienes permisos para este contenido');
+        }
+    }
+
     public function excel($id){
         //return Excel::download(new TaxiExport,'taxi.xlsx');
         return (new Exports\TaxiExport(intval($id)))->download('taxis_historico.xlsx');
@@ -480,5 +544,16 @@ class TaxisController extends Controller
     public function excelGastos($id){
         //return Excel::download(new TaxiExport,'taxi.xlsx');
         return (new Exports\TaxiGastos(intval($id)))->download('taxis_gastos.xlsx');
+    }
+
+    public function download($document){
+        $ruta=explode("_", $document);
+
+        $headers = array(
+            "Content-type" => "application/pdf",
+            "Content-Disposition"   => "attachment; ". $ruta[0]
+        );
+
+        return Storage::disk('s3')->download('/Documentos/'.$ruta[0].'/'.$ruta[1], $ruta[1], $headers);
     }
 }

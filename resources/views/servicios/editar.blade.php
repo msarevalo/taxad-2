@@ -13,7 +13,7 @@
 
             <div class="col-md-6">
                 <select class="form-control mb-2" name="tipo" required style="text-transform: capitalize">
-                    <option selected disabled>Seleccione un tipo de servicio</option>
+                    <option selected disabled value="">Seleccione un tipo de servicio</option>
         	        @foreach($tipos as $tipo)
                         @if($tipo->id==$servicio->service_type)
                             <option style="text-transform: capitalize" value="{{$tipo->id}}" selected>
@@ -76,7 +76,7 @@
 
             <div class="col-md-6">
                 <select class="form-control mb-2" name="estado" required style="text-transform: capitalize">
-                    <option selected disabled>Seleccione un estado</option>
+                    <option selected disabled value="">Seleccione un estado</option>
                     @if($servicio->state==1)
                         <option style="text-transform: capitalize" value="1" selected>
                             Activo

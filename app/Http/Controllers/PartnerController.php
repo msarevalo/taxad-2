@@ -165,23 +165,30 @@ class PartnerController extends Controller
     }
 
     public function configura(){
-        $verifica = App\User::where([['state', '=', 1], ['profile', '=', 4]])->first();
+        $permiso = App\Permission::where([['menu', '=', 11], ['profile', '=', Auth::user()->profile]])->get();
 
-        if ($verifica!=null) {
-            $socios = DB::table('users')
-                ->join('percentages', 'percentages.user_id', '=', 'users.id')
-                ->select('users.id as id', 'users.name as name', 'percentages.percentage as porcentaje')
-                ->where([['users.state', '=', 1], ['users.profile', '=', 4]])
-                ->get();
-            $porcentajes = App\Percentage::where([['state', '=', 1]])->get();
+        if ($permiso[0]->edit) {
+                
+            $verifica = App\User::where([['state', '=', 1], ['profile', '=', 4]])->first();
 
-            $suma = DB::table('percentages')
-                ->select(DB::raw('sum(percentage) as suma'))
-                ->where('state', '=', 1)->get();
+            if ($verifica!=null) {
+                $socios = DB::table('users')
+                    ->join('percentages', 'percentages.user_id', '=', 'users.id')
+                    ->select('users.id as id', 'users.name as name', 'percentages.percentage as porcentaje')
+                    ->where([['users.state', '=', 1], ['users.profile', '=', 4]])
+                    ->get();
+                $porcentajes = App\Percentage::where([['state', '=', 1]])->get();
 
-            return view('socios.configura', compact('socios', 'porcentajes', 'suma'));
+                $suma = DB::table('percentages')
+                    ->select(DB::raw('sum(percentage) as suma'))
+                    ->where('state', '=', 1)->get();
+
+                return view('socios.configura', compact('socios', 'porcentajes', 'suma'));
+            }else{
+                return redirect('socios/crear')->with('sinUsuario', 'Necesitas tener al menos un socio activo para configurar las ganancias');
+            }
         }else{
-            return redirect('socios/crear')->with('sinUsuario', 'Necesitas tener al menos un socio activo para configurar las ganancias');
+            return redirect('home')->with('error', 'No tienes permisos para este contenido');
         }
     }
 

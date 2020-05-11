@@ -6,9 +6,11 @@ function selectOption(){
 	var submenu = $('#submenu').val();
 	if (submenu==1) {
 		$('#padres').css('display', 'block');
+		$('#padre').prop('required', 'true');
 		$('#logoMenu').css('display', 'none');
 	}else{
 		$('#padres').css('display', 'none');
+		$('#padre').removeAttr('required');
 		$('#logoMenu').css('display', 'block');
 	}
 }

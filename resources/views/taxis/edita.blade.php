@@ -26,7 +26,7 @@
 
                 <div class="col-md-6">
                     <select class="form-control mb-2" name="marca" required style="text-transform: capitalize">
-                        <option selected disabled>Seleccione una marca</option>
+                        <option selected disabled value="">Seleccione una marca</option>
                         @foreach($marcas as $marca)
                             @if($marca->id==$taxi->brand)
                                 <option style="text-transform: capitalize" value="{{$marca->id}}" selected>{{$marca->brand}}</option>
@@ -43,7 +43,7 @@
 
                 <div class="col-md-6">
                     <select class="form-control mb-2" name="idCond[]" required style="text-transform: capitalize" multiple="multiple">
-                        <option disabled>Seleccione un conductor</option>
+                        <option disabled value="">Seleccione un conductor</option>
                         @foreach($asignacion as $asigna)
                             <option selected style="text-transform: capitalize" value="{{$asigna->id}}">{{$asigna->name}} {{$asigna->lastname}}</option>
                         @endforeach
@@ -114,7 +114,8 @@
                         <label for="name" class="col-6">{{ __('No has cargado aun el SOAT para este vehiculo') }}</label>
                     @else
                         <label for="name" class="col-3">{{ __('SOAT') }}</label>
-                        <a href="../../documentos/soat/{{$soat->document}}" class="col-6" style="text-decoration: none;" target="_blank">
+                        @php($ruta='soat_'.$soat->document)
+                        <a href="{{route('taxi.descargar', $ruta)}}" class="col-6" style="text-decoration: none;">
                             <img src="../../img/pdf.png" style="width: 3.5%"> {{$soat->document}}
                         </a>
                     @endif
@@ -126,8 +127,9 @@
                         <label for="name" class="col-6">{{ __('No has cargado aun el Tarjeta de Propiedad para este vehiculo') }}</label>
                     @else
                         <label for="name" class="col-3">{{ __('Tarjeta de Propiedad') }}</label>
-                        <a href="../../documentos/tp/{{$tp->document}}" class="col-6" style="text-decoration: none;" target="_blank">
-                            <img src="../../img/pdf.png" style="width: 5%"> {{$tp->document}}
+                        @php($ruta='tp_'.$tp->document)
+                        <a href="{{route('taxi.descargar', $ruta)}}" class="col-6" style="text-decoration: none;">
+                            <img src="../../img/pdf.png" style="width: 3.5%"> {{$tp->document}}
                         </a>
                     @endif
                 </td>
@@ -138,8 +140,9 @@
                         <label for="name" class="col-6">{{ __('No has cargado aun Tarjeta de operacion para este vehiculo') }}</label>
                     @else
                         <label for="name" class="col-3">{{ __('Tarjeta de Operacion') }}</label>
-                        <a href="../../documentos/tarjeton/{{$tarjeton->document}}" class="col-6" style="text-decoration: none;" target="_blank">
-                            <img src="../../img/pdf.png" style="width: 5%"> {{$to->document}}
+                        @php($ruta='tp_'.$tp->document)
+                        <a href="{{route('taxi.descargar', $ruta)}}" class="col-6" style="text-decoration: none;">
+                            <img src="../../img/pdf.png" style="width: 3.5%"> {{$to->document}}
                         </a>
                     @endif
                 </td>
@@ -150,8 +153,9 @@
                         <label for="name" class="col-6">{{ __('No has cargado aun Revision Tecnomecanica para este vehiculo') }}</label>
                     @else
                         <label for="name" class="col-3">{{ __('Revision Tecnomecanica') }}</label>
-                        <a href="../../documentos/tarjeton/{{$tarjeton->document}}" class="col-6" style="text-decoration: none;" target="_blank">
-                            <img src="../../img/pdf.png" style="width: 5%"> {{$rt->document}}
+                        @php($ruta='rt_'.$rt->document)
+                        <a href="{{route('taxi.descargar', $ruta)}}" class="col-6" style="text-decoration: none;">
+                            <img src="../../img/pdf.png" style="width: 3.5%"> {{$rt->document}}
                         </a>
                     @endif
                 </td>

@@ -20,9 +20,11 @@
       <textarea rows="8" cols="120" required style="resize: none;" id="tratamiento" name="tratamiento">{{$tratamiento->text}}</textarea>
     <div class="form-group row mb-0" style="margin-top: 10px;">
       <div class="col-md-6 offset-md-4">
-        <button type="submit" class="btn btn-primary">
-          {{ __('Agregar') }}
-        </button>
+        @if($permiso[0]->edit==1)
+          <button type="submit" class="btn btn-primary">
+            {{ __('Agregar') }}
+          </button>
+        @endif
       </div>
     </div>
   </form>
@@ -33,9 +35,11 @@
       <textarea rows="8" cols="120" required style="resize: none;" id="terminos" name="terminos">{{$terminos->text}}</textarea>
     <div class="form-group row mb-0" style="margin-top: 10px;">
       <div class="col-md-6 offset-md-4">
-        <button type="submit" class="btn btn-primary">
-          {{ __('Agregar') }}
-        </button>
+        @if($permiso[0]->edit==1)
+          <button type="submit" class="btn btn-primary">
+            {{ __('Agregar') }}
+          </button>
+        @endif
       </div>
     </div>
   </form>

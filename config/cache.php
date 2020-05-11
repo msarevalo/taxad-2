@@ -2,6 +2,14 @@
 
 use Illuminate\Support\Str;
 
+if (!class_exists('Memcached')) {
+    include ("memcached.php");
+}
+
+$memcachedServers = [
+    ['host' => env('MEMCACHED_HOST', '127.0.0.1'), 'port' => env('MEMCACHED_PORT', 11211), 'weight' => 100]
+];
+
 return [
 
     /*
@@ -62,13 +70,7 @@ return [
             'options' => [
                 // Memcached::OPT_CONNECT_TIMEOUT => 2000,
             ],
-            'servers' => [
-                [
-                    'host' => env('MEMCACHED_HOST', '127.0.0.1'),
-                    'port' => env('MEMCACHED_PORT', 11211),
-                    'weight' => 100,
-                ],
-            ],
+            'servers' => $memcachedServers,
         ],
 
         'redis' => [

@@ -14,38 +14,51 @@ class ReportsController extends Controller
 {
     //
     public function reporte(){
-    	if (Auth::user()->profile==1) {
-    		$socios = App\User::where([['state', '=', 1], ['profile', '=', 4]])->orderBy('name')->get();
-    		return view('reportes', compact('socios'));
-    	}elseif (Auth::user()->profile==4) {
-    		$socios = App\User::where('id', '=', Auth::user()->id)->orderBy('name')->get();
-    		return view('reportes', compact('socios'));
-    	}else{
-    		return view('reportes');
-    	}
+        $permiso = App\Permission::where([['menu', '=', 20], ['profile', '=', Auth::user()->profile]])->get();
+
+        if ($permiso[0]->read==1) {
+    	   if (Auth::user()->profile==1) {
+    		  $socios = App\User::where([['state', '=', 1], ['profile', '=', 4]])->orderBy('name')->get();
+    		  return view('reportes', compact('socios'));
+    	   }elseif (Auth::user()->profile==4) {
+    		  $socios = App\User::where('id', '=', Auth::user()->id)->orderBy('name')->get();
+    		  return view('reportes', compact('socios'));
+    	   }else{
+    	       return view('reportes');
+    	   }
+        }else{
+            return redirect('home')->with('error', 'No tienes permisos para este contenido');
+        }
     }
 
     public function historico(){
-    	return (new Exports\TaxisHistorico())->download('Revenue_and_Expenses.xlsx');
+        $permiso = App\Permission::where([['menu', '=', 20], ['profile', '=', Auth::user()->profile]])->get();
+
+        if ($permiso[0]->create==1) {
+    	   return (new Exports\TaxisHistorico())->download('Revenue_and_Expenses.xlsx');
+        }else{
+            return redirect('reportes')->with('error', 'No tienes permisos para este contenido');
+        }
     }
 
     public function gastos(){
-    	return (new Exports\TaxisGastos())->download('GastosTaxis.xlsx');
+        $permiso = App\Permission::where([['menu', '=', 20], ['profile', '=', Auth::user()->profile]])->get();
+
+        if ($permiso[0]->create==1) {
+           return (new Exports\TaxisGastos())->download('GastosTaxis.xlsx');
+        }else{
+            return redirect('reportes')->with('error', 'No tienes permisos para este contenido');
+        }
     }
 
     public function socios($id){
-    	return (new Exports\TaxisSocios(intval($id)))->download('Ganancias_Socio.xlsx');
-    }
+    	$permiso = App\Permission::where([['menu', '=', 20], ['profile', '=', Auth::user()->profile]])->get();
 
-    public function correo(){
-    	$to_name = 'Manuel Arevalo';
-		$to_email = 'msscout11@gmail.com';
-		$data = array('name'=>"Ogbonna Vitalis(sender_name)", 'body' => "A test mail");
-		Mail::send('emails.mail', $data, function($message) use ($to_name, $to_email) {
-			$message->to($to_email, $to_name)
-			->subject('Prueba Taxad');
-			$message->from('no-responder@taxad.com','Taxad');
-		});
+        if ($permiso[0]->create==1) {
+           return (new Exports\TaxisSocios(intval($id)))->download('Ganancias_Socio.xlsx');
+        }else{
+            return redirect('reportes')->with('error', 'No tienes permisos para este contenido');
+        }
     }
 
 }

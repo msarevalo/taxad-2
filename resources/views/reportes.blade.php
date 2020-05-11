@@ -3,6 +3,14 @@
 <title>Taxad | Reportes</title>
 
 @section('formulario')
+@if(session('error'))
+    <div class="alert alert-danger">
+        {{session('error')}}
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+@endif
 <table align="center" style="border-spacing: 30px 15px; border-collapse: separate; margin-top: 40px;">
 	<tbody>
 		<tr>

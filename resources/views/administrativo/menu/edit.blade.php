@@ -44,7 +44,7 @@
 
                 <div class="col-md-6">
                     <select class="form-control mb-2" name="submenu" id="submenu" required style="text-transform: capitalize">
-                        <option disabled>Seleccione una opción</option>
+                        <option disabled value="">Seleccione una opción</option>
                         @if($menu->submenu==0)
                         	<option style="text-transform: capitalize" value="1">Si</option>
                         	<option style="text-transform: capitalize" value="0" selected>No</option>
@@ -64,8 +64,8 @@
                 <label for="padre" class="col-md-4 col-form-label text-md-right">{{ __('Padre') }}</label>
 
                 <div class="col-md-6" style="display: inline-block;">
-                    <select class="form-control mb-2" name="padre" id="padre" required style="text-transform: capitalize">
-                        <option disabled selected>Seleccione una opción</option>
+                    <select class="form-control mb-2" name="padre" id="padre" style="text-transform: capitalize">
+                        <option disabled selected value="">Seleccione una opción</option>
                         @foreach($padres as $padre)
                         	@if($padre->name!="Cerrar Sesión")
                         		@if($menu->parent==$padre->id)
@@ -91,7 +91,7 @@
 
 	                <div class="col-md-6" style="display: inline-block; width: 100%">
 	                    <select class="form-control mb-2" name="iconos" id="iconos" required style="text-transform: capitalize">
-	                        <option disabled selected>Seleccione una opción</option>
+	                        <option disabled selected value="">Seleccione una opción</option>
 	                        @foreach($grupos as $grupo)
 	                        	<optgroup label="{{$grupo->name}}">
 	                        		@foreach($iconos as $icono)

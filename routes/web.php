@@ -11,21 +11,21 @@
 |
 */
 
-Route::get('/', 'Home@inicio')->name('home');
+Route::get('index.php/', 'Home@inicio')->name('home');
 
-Route::post('/', 'PagesController@cambiar')->name('cambiar');
+Route::post('index.php/', 'PagesController@cambiar')->name('cambiar');
 
-Route::get('/login', 'PagesController@login')->name('login');
+Route::get('index.php/login', 'PagesController@login')->name('login');
 
-Route::get('/registro', 'PagesController@registro')->name('registro');
+Route::get('index.php/registro', 'PagesController@registro')->name('registro');
 
-Route::get('/perfil', 'ProfileController@perfil')->name('perfil');
+Route::get('index.php/perfil', 'ProfileController@perfil')->name('perfil');
 
-Route::put('/perfil/{id}', 'ProfileController@editar')->name('miPerfil.editar');
+Route::put('index.php/perfil/{id}', 'ProfileController@editar')->name('miPerfil.editar');
 
-Route::get('/perfil/cambio', 'ProfileController@cambio')->name('perfil.cambio');
+Route::get('index.php/perfil/cambio', 'ProfileController@cambio')->name('perfil.cambio');
 
-Route::post('/perfil', 'ProfileController@cambiar')->name('perfil.cambiar');
+Route::post('index.php/perfil', 'ProfileController@cambiar')->name('perfil.cambiar');
 
 
 /*********************************************
@@ -35,21 +35,21 @@ Route::post('/perfil', 'ProfileController@cambiar')->name('perfil.cambiar');
  *********************************************/
 
 
-Route::get('/conductores', 'DriversController@conductor')->name('conductor');
+Route::get('index.php/conductores', 'DriversController@conductor')->name('conductor');
 
-Route::get('/conductores/detalle/{id?}', 'DriversController@detalle')->name('conductor.detalle');
+Route::get('index.php/conductores/detalle/{id?}', 'DriversController@detalle')->name('conductor.detalle');
 
-Route::get('/conductores/create', 'DriversController@creaCond')->name('conductor.crea');
+Route::get('index.php/conductores/create', 'DriversController@creaCond')->name('conductor.crea');
 
-Route::post('/conductores', 'DriversController@crearCond')->name('conductor.crear');
+Route::post('index.php/conductores', 'DriversController@crearCond')->name('conductor.crear');
 
-Route::get('/conductores/edita/{id?}', 'DriversController@editaCon')->name('conductor.edita');
+Route::get('index.php/conductores/edita/{id?}', 'DriversController@editaCon')->name('conductor.edita');
 
-Route::put('/conductores/{id}', 'DriversController@editarCond')->name('conductor.editar');
+Route::put('index.php/conductores/{id}', 'DriversController@editarCond')->name('conductor.editar');
 
-Route::get('/conductores/{id}', 'DriversController@permitir')->name('conductor.permitir');
+Route::get('index.php/conductores/{id}', 'DriversController@permitir')->name('conductor.permitir');
 
-Route::delete('/conductores/{id}', 'DriversController@negar')->name('conductor.negar');
+Route::delete('index.php/conductores/{id}', 'DriversController@negar')->name('conductor.negar');
 
 
 /*************************************************
@@ -58,17 +58,17 @@ Route::delete('/conductores/{id}', 'DriversController@negar')->name('conductor.n
  *************************************************
  *************************************************/
 
-Route::get('/administradores', 'AdministratorsController@administrador')->name('admin');
+Route::get('index.php/administradores', 'AdministratorsController@administrador')->name('admin');
 
-Route::get('/administradores/create', 'AdministratorsController@creaAdmin')->name('admin.crea');
+Route::get('index.php/administradores/create', 'AdministratorsController@creaAdmin')->name('admin.crea');
 
-Route::post('/administradores', 'AdministratorsController@crearAdmin')->name('admin.crear');
+Route::post('index.php/administradores', 'AdministratorsController@crearAdmin')->name('admin.crear');
 
-Route::get('/administradores/detalle/{id?}', 'AdministratorsController@detalleAdmin')->name('admin.detalle');
+Route::get('index.php/administradores/detalle/{id?}', 'AdministratorsController@detalleAdmin')->name('admin.detalle');
 
-Route::get('/administradores/edita/{id?}', 'AdministratorsController@editaAdmin')->name('admin.edita');
+Route::get('index.php/administradores/edita/{id?}', 'AdministratorsController@editaAdmin')->name('admin.edita');
 
-Route::put('/administradores/{id}', 'AdministratorsController@editarAdmin')->name('admin.editar');
+Route::put('index.php/administradores/{id}', 'AdministratorsController@editarAdmin')->name('admin.editar');
 
 
 /*********************************************
@@ -77,39 +77,43 @@ Route::put('/administradores/{id}', 'AdministratorsController@editarAdmin')->nam
  *********************************************
  *********************************************/
 
-Route::get('/taxis', 'TaxisController@taxi')->name('taxis');
+Route::get('index.php/taxis', 'TaxisController@taxi')->name('taxis');
 
-Route::get('/taxis/detalle/{id}/{inicio?}/{fin?}', 'TaxisController@detalleTax')->name('taxi.detalle');
+Route::get('index.php/taxis/detalle/{id}/{inicio?}/{fin?}', 'TaxisController@detalleTax')->name('taxi.detalle');
 
-Route::get('/taxis/create', 'TaxisController@creaTax')->name('taxi.crea');
+Route::get('index.php/taxis/create', 'TaxisController@creaTax')->name('taxi.crea');
 
-Route::post('/taxis', 'TaxisController@crearTax')->name('taxi.crear');
+Route::post('index.php/taxis', 'TaxisController@crearTax')->name('taxi.crear');
 
-Route::get('/taxis/edita/{id?}', 'TaxisController@editaTax')->name('taxi.edita');
+Route::get('index.php/taxis/edita/{id?}', 'TaxisController@editaTax')->name('taxi.edita');
 
-Route::put('/taxis/{id}', 'TaxisController@editarTax')->name('taxi.editar');
+Route::put('index.php/taxis/{id}', 'TaxisController@editarTax')->name('taxi.editar');
 
-Route::get('/taxis/asigna/{id}', 'TaxisController@asignaTax')->name('taxi.asigna');
+Route::get('index.php/taxis/asigna/{id}', 'TaxisController@asignaTax')->name('taxi.asigna');
 
-Route::post('/taxis/asigna/{id}', 'TaxisController@asignarTax')->name('taxi.asignar');
+Route::post('index.php/taxis/asigna/{id}', 'TaxisController@asignarTax')->name('taxi.asignar');
 
-Route::get('/taxis/documento/{id}', 'TaxisController@documento')->name('taxi.documentos');
+Route::get('index.php/taxis/documento/{id}', 'TaxisController@documento')->name('taxi.documentos');
 
-Route::post('/taxis/documento/{id?}', 'TaxisController@cargarDocumento')->name('taxi.cargardocumento');
+Route::post('index.php/taxis/documento/{id?}', 'TaxisController@cargarDocumento')->name('taxi.cargardocumento');
 
-Route::get('/taxis/reporta/{id}', 'TaxisController@reporta')->name('taxi.reporta');
+Route::get('index.php/taxis/reporta/{id}', 'TaxisController@reporta')->name('taxi.reporta');
 
-Route::put('/taxis/reporta/{id}', 'TaxisController@reportar')->name('taxi.reportar');
+Route::put('index.php/taxis/reporta/{id}', 'TaxisController@reportar')->name('taxi.reportar');
 
-Route::get('/taxis/gastos/{id}/{w}/{val}', 'TaxisController@gastos')->name('taxi.gasto');
+Route::get('index.php/taxis/gastos/{id}/{w}/{val}', 'TaxisController@gastos')->name('taxi.gasto');
 
-Route::post('/taxis/gasto/{id}', 'TaxisController@gastosIngresar')->name('taxi.gastos');
+Route::post('index.php/taxis/gasto/{id}', 'TaxisController@gastosIngresar')->name('taxi.gastos');
 
-Route::get('/taxi/exporta/historico/{id}', 'TaxisController@excel')->name('taxi.excel');
+Route::get('index.php/taxi/exporta/historico/{id}', 'TaxisController@excel')->name('taxi.excel');
 
-Route::get('/taxi/exporta/gastos/{id}', 'TaxisController@excelGastos')->name('taxi.excelGastos');
+Route::get('index.php/taxi/exporta/gastos/{id}', 'TaxisController@excelGastos')->name('taxi.excelGastos');
 
-Route::delete('/taxis/detalle/{id}', 'TaxisController@eliminarReporte')->name('taxi.eliminar');
+Route::delete('index.php/taxis/detalle/{id}', 'TaxisController@eliminarReporte')->name('taxi.eliminar');
+
+Route::get('index.php/detalle/{id}/gastos/{w}', 'TaxisController@detalleGasto')->name('taxi.gastos.detalle');
+
+Route::get('index.php/taxi/edita/descarga/{document}', 'TaxisController@download')->name('taxi.descargar');
 
 
 /**********************************************
@@ -118,17 +122,17 @@ Route::delete('/taxis/detalle/{id}', 'TaxisController@eliminarReporte')->name('t
  **********************************************
  **********************************************/
 
-Route::get('/marcas', 'BrandsController@marca')->name('marcas');
+Route::get('index.php/marcas', 'BrandsController@marca')->name('marcas');
 
-Route::get('/marcas/create', 'BrandsController@creaMarca')->name('marca.crea');
+Route::get('index.php/marcas/create', 'BrandsController@creaMarca')->name('marca.crea');
 
-Route::post('/marcas', 'BrandsController@crearMarca')->name('marca.crear');
+Route::post('index.php/marcas', 'BrandsController@crearMarca')->name('marca.crear');
 
-Route::get('/marcas/detalle/{id?}', 'BrandsController@detalleMarca')->name('marca.detalle');
+Route::get('index.php/marcas/detalle/{id?}', 'BrandsController@detalleMarca')->name('marca.detalle');
 
-Route::get('/marcas/edita/{id?}', 'BrandsController@editaMarca')->name('marca.edita');
+Route::get('index.php/marcas/edita/{id?}', 'BrandsController@editaMarca')->name('marca.edita');
 
-Route::put('/marcas/{id?}', 'BrandsController@editarMarca')->name('marca.editar');
+Route::put('index.php/marcas/{id?}', 'BrandsController@editarMarca')->name('marca.editar');
 
 
 /**********************************************
@@ -139,7 +143,7 @@ Route::put('/marcas/{id?}', 'BrandsController@editarMarca')->name('marca.editar'
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
+Route::get('index.php/home', 'HomeController@index')->name('home');
 
 /**********************************************
  **********************************************
@@ -149,21 +153,21 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 //Route::get('/calendar', 'PagesController@Calendario')->name('calendario');
 
-Route::get('calendario/form','CalendarController@formulario');
+Route::get('index.php/calendario/form','CalendarController@formulario');
 
-Route::post('evento/create','CalendarController@crearEvento');
+Route::post('index.php/evento/create','CalendarController@crearEvento');
 
-Route::get('calendario/details/{id}','CalendarController@detalles');
+Route::get('index.php/calendario/details/{id}','CalendarController@detalles');
 
-Route::get('calendario','CalendarController@index')->name('calendario');
+Route::get('index.php/calendario','CalendarController@index')->name('calendario');
 
-Route::get('calendario/{month}','CalendarController@mes');
+Route::get('index.php/calendario/{month}','CalendarController@mes');
 
-Route::post('evento/calendario','CalendarController@calendario');
+Route::post('index.php/evento/calendario','CalendarController@calendario');
 
-Route::get('calendario/delete/{id}','CalendarController@eliminarEvento')->name('calendario.delete');
-Route::get('calendario/edit/{id}','CalendarController@editaCalendario')->name('calendario.edita');
-Route::put('/calendario/{id}', 'CalendarController@editarCalendario')->name('calendario.editar');
+Route::get('index.php/calendario/delete/{id}','CalendarController@eliminarEvento')->name('calendario.delete');
+Route::get('index.php/calendario/edit/{id}','CalendarController@editaCalendario')->name('calendario.edita');
+Route::put('index.php/calendario/{id}', 'CalendarController@editarCalendario')->name('calendario.editar');
 
 /*************************************************
  *************************************************
@@ -171,19 +175,19 @@ Route::put('/calendario/{id}', 'CalendarController@editarCalendario')->name('cal
  *************************************************
  *************************************************/
 
-Route::get('/socios', 'PartnerController@socio')->name('socios');
+Route::get('index.php/socios', 'PartnerController@socio')->name('socios');
 
-Route::get('/socios/crear', 'PartnerController@creaSocio')->name('socio.crea');
+Route::get('index.php/socios/crear', 'PartnerController@creaSocio')->name('socio.crea');
 
-Route::post('/socios', 'PartnerController@crearSocio')->name('socio.creado');
+Route::post('index.php/socios', 'PartnerController@crearSocio')->name('socio.creado');
 
-Route::get('/socios/editar/{id}', 'PartnerController@editaSocio')->name('socio.edita');
+Route::get('index.php/socios/editar/{id}', 'PartnerController@editaSocio')->name('socio.edita');
 
-Route::put('/socios/{id}', 'PartnerController@editarSocio')->name('socio.editar');
+Route::put('index.php/socios/{id}', 'PartnerController@editarSocio')->name('socio.editar');
 
-Route::get('/socios/configura', 'PartnerController@configura')->name('socio.configura');
+Route::get('index.php/socios/configura', 'PartnerController@configura')->name('socio.configura');
 
-Route::post('/socios/configura', 'PartnerController@configurar')->name('socio.configurar');
+Route::post('index.php/socios/configura', 'PartnerController@configurar')->name('socio.configurar');
 
 /*************************************************
  *************************************************
@@ -191,29 +195,11 @@ Route::post('/socios/configura', 'PartnerController@configurar')->name('socio.co
  *************************************************
  *************************************************/
 
-Route::get('/tarifa', 'RatesController@tarifa')->name('tarifa');
+Route::get('index.php/tarifa', 'RatesController@tarifa')->name('tarifa');
 
-Route::get('/tarifa/edita', 'RatesController@editaTarifa')->name('tarifa.edita');
+Route::get('index.php/tarifa/edita', 'RatesController@editaTarifa')->name('tarifa.edita');
 
-Route::put('/tarifa', 'RatesController@editarTarifa')->name('tarifa.editar');
-
-/*************************************************
- *************************************************
- * Creacion y administracion de Categorias********
- *************************************************
- *************************************************/
-
-Route::get('/categoria', 'ExpensesCategoryController@categoria')->name('categoria');
-
-Route::get('/categoria/detalle/{id?}', 'ExpensesCategoryController@destalleCategoria')->name('categoria.detalle');
-
-Route::get('/categoria/crear', 'ExpensesCategoryController@crea')->name('categoria.crea');
-
-Route::post('/categoria', 'ExpensesCategoryController@crear')->name('categoria.crear');
-
-Route::get('/categoria/edita/{id}', 'ExpensesCategoryController@edita')->name('categoria.edita');
-
-Route::put('/categoria/{id}', 'ExpensesCategoryController@editar')->name('categoria.editar');
+Route::put('index.php/tarifa', 'RatesController@editarTarifa')->name('tarifa.editar');
 
 /*************************************************
  *************************************************
@@ -221,17 +207,35 @@ Route::put('/categoria/{id}', 'ExpensesCategoryController@editar')->name('catego
  *************************************************
  *************************************************/
 
-Route::get('/descripcion', 'ExpensesDescriptionController@descripcion')->name('descripcion');
+Route::get('index.php/categoria', 'ExpensesCategoryController@categoria')->name('categoria');
 
-Route::get('/descripcion/crear', 'ExpensesDescriptionController@crea')->name('descripcion.crea');
+Route::get('index.php/categoria/detalle/{id?}', 'ExpensesCategoryController@destalleCategoria')->name('categoria.detalle');
 
-Route::post('/descripcion', 'ExpensesDescriptionController@crear')->name('descripcion.crear');
+Route::get('index.php/categoria/crear', 'ExpensesCategoryController@crea')->name('categoria.crea');
 
-Route::get('/descripcion/editar/{id}', 'ExpensesDescriptionController@edita')->name('descripcion.edita');
+Route::post('index.php/categoria', 'ExpensesCategoryController@crear')->name('categoria.crear');
 
-Route::put('/descripcion/{id}', 'ExpensesDescriptionController@editar')->name('descripcion.editar');
+Route::get('index.php/categoria/edita/{id}', 'ExpensesCategoryController@edita')->name('categoria.edita');
 
-Route::get('/descripcion/crear/{id}', 'ExpensesDescriptionController@creaDes')->name('descripcion.creaDes');
+Route::put('index.php/categoria/{id}', 'ExpensesCategoryController@editar')->name('categoria.editar');
+
+/*************************************************
+ *************************************************
+ * Creacion y administracion de Categorias********
+ *************************************************
+ *************************************************/
+
+Route::get('index.php/descripcion', 'ExpensesDescriptionController@descripcion')->name('descripcion');
+
+Route::get('index.php/descripcion/crear', 'ExpensesDescriptionController@crea')->name('descripcion.crea');
+
+Route::post('index.php/descripcion', 'ExpensesDescriptionController@crear')->name('descripcion.crear');
+
+Route::get('index.php/descripcion/editar/{id}', 'ExpensesDescriptionController@edita')->name('descripcion.edita');
+
+Route::put('index.php/descripcion/{id}', 'ExpensesDescriptionController@editar')->name('descripcion.editar');
+
+Route::get('index.php/descripcion/crear/{id}', 'ExpensesDescriptionController@creaDes')->name('descripcion.creaDes');
 
 /*************************************************
  *************************************************
@@ -239,11 +243,11 @@ Route::get('/descripcion/crear/{id}', 'ExpensesDescriptionController@creaDes')->
  *************************************************
  *************************************************/
 
-Route::get('/administrativo/menus', 'MenusController@menus')->name('menus');
+Route::get('index.php/administrativo/menus', 'MenusController@menus')->name('menus');
 
-Route::get('/administrativo/menus/edita/{id?}', 'MenusController@editamenu')->name('menu.edita');
+Route::get('index.php/administrativo/menus/edita/{id?}', 'MenusController@editamenu')->name('menu.edita');
 
-Route::put('/administrativo/menus/{id}', 'MenusController@editarMenu')->name('menu.editar');
+Route::put('index.php/administrativo/menus/{id}', 'MenusController@editarMenu')->name('menu.editar');
 
 /*************************************************
  *************************************************
@@ -251,15 +255,15 @@ Route::put('/administrativo/menus/{id}', 'MenusController@editarMenu')->name('me
  *************************************************
  *************************************************/
 
-Route::get('/administrativo/separadores', 'MenusController@separadores')->name('separador');
+Route::get('index.php/administrativo/separadores', 'MenusController@separadores')->name('separador');
 
-Route::get('/administrativo/separadores/edita/{id?}', 'MenusController@editaSepara')->name('separador.edita');
+Route::get('index.php/administrativo/separadores/edita/{id?}', 'MenusController@editaSepara')->name('separador.edita');
 
-Route::put('/administrativo/separadores/{id}', 'MenusController@editarSepara')->name('separador.editar');
+Route::put('index.php/administrativo/separadores/{id}', 'MenusController@editarSepara')->name('separador.editar');
 
-Route::get('/administrativo/separadores/crea', 'MenusController@creaSepara')->name('separador.crea');
+Route::get('index.php/administrativo/separadores/crea', 'MenusController@creaSepara')->name('separador.crea');
 
-Route::post('/administrativo/separadores', 'MenusController@crearSepara')->name('separador.crear');
+Route::post('index.php/administrativo/separadores', 'MenusController@crearSepara')->name('separador.crear');
 
 /*************************************************
  *************************************************
@@ -267,15 +271,15 @@ Route::post('/administrativo/separadores', 'MenusController@crearSepara')->name(
  *************************************************
  *************************************************/
 
-Route::get('/administrativo/perfiles', 'ProfilesController@perfiles')->name('perfil');
+Route::get('index.php/administrativo/perfiles', 'ProfilesController@perfiles')->name('perfil');
 
-Route::get('/administrativo/perfiles/crea', 'ProfilesController@creaPerfil')->name('perfil.crea');
+Route::get('index.php/administrativo/perfiles/crea', 'ProfilesController@creaPerfil')->name('perfil.crea');
 
-Route::post('/administrativo/perfiles/{id}', 'ProfilesController@crearPerfil')->name('perfil.crear');
+Route::post('index.php/administrativo/perfiles/{id}', 'ProfilesController@crearPerfil')->name('perfil.crear');
 
-Route::get('/administrativo/perfiles/edita/{id}', 'ProfilesController@editaPerfil')->name('perfil.edita');
+Route::get('index.php/administrativo/perfiles/edita/{id}', 'ProfilesController@editaPerfil')->name('perfil.edita');
 
-Route::put('/administrativo/perfiles/{id}', 'ProfilesController@editarPerfil')->name('perfil.editar');
+Route::put('index.php/administrativo/perfiles/{id}', 'ProfilesController@editarPerfil')->name('perfil.editar');
 
 /*************************************************
  *************************************************
@@ -283,11 +287,11 @@ Route::put('/administrativo/perfiles/{id}', 'ProfilesController@editarPerfil')->
  *************************************************
  *************************************************/
 
-Route::get('/administrativo/permisos', 'PermissionsController@permisos')->name('permisos');
+Route::get('index.php/administrativo/permisos', 'PermissionsController@permisos')->name('permisos');
 
-Route::get('/administrativo/permisos/configurar/{id}', 'PermissionsController@configuraPermisos')->name('permisos.configura');
+Route::get('index.php/administrativo/permisos/configurar/{id}', 'PermissionsController@configuraPermisos')->name('permisos.configura');
 
-Route::put('/administrativo/permisos/{id}', 'PermissionsController@configurar')->name('permisos.configurar');
+Route::put('index.php/administrativo/permisos/{id}', 'PermissionsController@configurar')->name('permisos.configurar');
 
 /*************************************************
  *************************************************
@@ -295,13 +299,13 @@ Route::put('/administrativo/permisos/{id}', 'PermissionsController@configurar')-
  *************************************************
  *************************************************/
 
-Route::get('/buzon', 'MessagesController@buzon')->name('buzon');
+Route::get('index.php/buzon', 'MessagesController@buzon')->name('buzon');
 
-Route::get('/buzon/leidas', 'MessagesController@leidas')->name('leidas');
+Route::get('index.php/buzon/leidas', 'MessagesController@leidas')->name('leidas');
 
-Route::get('/buzon/pendientes', 'MessagesController@porLeer')->name('pendientes');
+Route::get('index.php/buzon/pendientes', 'MessagesController@porLeer')->name('pendientes');
 
-Route::post('leido', 'MessagesController@leido');
+Route::post('index.php/leido', 'MessagesController@leido');
 
 /*************************************************
  *************************************************
@@ -309,25 +313,25 @@ Route::post('leido', 'MessagesController@leido');
  *************************************************
  *************************************************/
 
-Route::get('/servicios', 'ServicesController@servicios')->name('servicios');
+Route::get('index.php/servicios', 'ServicesController@servicios')->name('servicios');
 
-Route::get('/servicios/crear', 'ServicesController@crea')->name('servicio.crea');
+Route::get('index.php/servicios/crear', 'ServicesController@crea')->name('servicio.crea');
 
-Route::post('/servicios', 'ServicesController@crear')->name('servicio.crear');
+Route::post('index.php/servicios', 'ServicesController@crear')->name('servicio.crear');
 
-Route::get('/servicios/editar/{id}', 'ServicesController@edita')->name('servicio.edita');
+Route::get('index.php/servicios/editar/{id}', 'ServicesController@edita')->name('servicio.edita');
 
-Route::put('/servicios/{id}', 'ServicesController@editar')->name('servicio.editar');
+Route::put('index.php/servicios/{id}', 'ServicesController@editar')->name('servicio.editar');
 
-Route::get('/servicios/tipos', 'ServicesController@tipos')->name('tipos');
+Route::get('index.php/servicios/tipos', 'ServicesController@tipos')->name('tipos');
 
-Route::get('/servicios/tipos/crear', 'ServicesController@tiposCrea')->name('tipos.crea');
+Route::get('index.php/servicios/tipos/crear', 'ServicesController@tiposCrea')->name('tipos.crea');
 
-Route::post('/servicios/tipos', 'ServicesController@tiposCrear')->name('tipos.crear');
+Route::post('index.php/servicios/tipos', 'ServicesController@tiposCrear')->name('tipos.crear');
 
-Route::get('/servicios/tipos/editar/{id}', 'ServicesController@tiposEdita')->name('tipos.edita');
+Route::get('index.php/servicios/tipos/editar/{id}', 'ServicesController@tiposEdita')->name('tipos.edita');
 
-Route::put('/servicios/tipos/{id}', 'ServicesController@tiposEditar')->name('tipos.editar');
+Route::put('index.php/servicios/tipos/{id}', 'ServicesController@tiposEditar')->name('tipos.editar');
 
 /*************************************************
  *************************************************
@@ -335,11 +339,11 @@ Route::put('/servicios/tipos/{id}', 'ServicesController@tiposEditar')->name('tip
  *************************************************
  *************************************************/
 
-Route::get('/administrativo/legales', 'LegalsController@legales')->name('legales');
+Route::get('index.php/administrativo/legales', 'LegalsController@legales')->name('legales');
 
-Route::put('/administrativo/legales/tratamiento', 'LegalsController@tratamiento')->name('legales.tratamiento');
+Route::put('index.php/administrativo/legales/tratamiento', 'LegalsController@tratamiento')->name('legales.tratamiento');
 
-Route::put('/administrativo/legales/terminos', 'LegalsController@terminos')->name('legales.terminos');
+Route::put('index.php/administrativo/legales/terminos', 'LegalsController@terminos')->name('legales.terminos');
 
 /*************************************************
  *************************************************
@@ -347,12 +351,14 @@ Route::put('/administrativo/legales/terminos', 'LegalsController@terminos')->nam
  *************************************************
  *************************************************/
 
-Route::get('/reportes', 'ReportsController@reporte')->name('reportes');
+Route::get('index.php/reportes', 'ReportsController@reporte')->name('reportes');
 
-Route::get('/reportes/exporta/historico', 'ReportsController@historico')->name('reportes.excel');
+Route::get('index.php/reportes/exporta/historico', 'ReportsController@historico')->name('reportes.excel');
 
-Route::get('/reportes/exporta/gastos', 'ReportsController@gastos')->name('reportes.excel2');
+Route::get('index.php/reportes/exporta/gastos', 'ReportsController@gastos')->name('reportes.excel2');
 
-Route::get('/reportes/exporta/socios/{id}', 'ReportsController@socios')->name('reportes.socios');
+Route::get('index.php/reportes/exporta/socios/{id}', 'ReportsController@socios')->name('reportes.socios');
 
-Route::get('/reportes/correo', 'ReportsController@correo')->name('correo');
+Route::get('index.php/error', 'ErrorController@error');
+
+Route::resource('index.php/archivos', 'FilesController', ['only' => ['store']]);

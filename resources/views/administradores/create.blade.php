@@ -86,7 +86,7 @@
 
             <div class="col-md-6">
                 <select id="perfil" class="form-control @error('perfil') is-invalid @enderror" name="perfil" value="{{ old('perfil') }}" required autocomplete="perfil">
-                    <option selected disabled>Seleccione un perfil</option>
+                    <option selected disabled value="">Seleccione un perfil</option>
                     @foreach($perfiles as $perfil)
                         <option value="{{$perfil->id}}">{{$perfil->profile_name}}</option>
                     @endforeach

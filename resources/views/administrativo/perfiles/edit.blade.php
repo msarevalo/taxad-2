@@ -26,7 +26,7 @@
 
                 <div class="col-md-6">
                     <select class="form-control mb-2" name="estado" id="estado" required style="text-transform: capitalize">
-                        <option disabled>Seleccione una opción</option>
+                        <option disabled value="">Seleccione una opción</option>
                         @if($perfil->state==0)
                         	<option style="text-transform: capitalize" value="1">Activo</option>
                         	<option style="text-transform: capitalize" value="0" selected>Inactivo</option>

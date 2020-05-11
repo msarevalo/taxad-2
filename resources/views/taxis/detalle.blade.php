@@ -12,10 +12,16 @@
   </div>
 @endif
 <a class="btn btn-light"  href="{{ route('taxis') }}">Atras</a>
-<a class="btn btn-info"  href="{{ route('taxi.edita', $taxi->id) }}">Editar</a>
-<a class="btn btn-primary"  href="{{ route('taxi.reporta', $taxi->id) }}">Reportar</a>
-<a class="btn btn-success" style="text-transform: none;" href="{{route('taxi.excel', $taxi->id)}}" title="Se bajara el historico sin filtro">Exportar Ingresos y Gastos</a>
-<a class="btn btn-success" style="text-transform: none;" href="{{route('taxi.excelGastos', $taxi->id)}}" title="Se bajara el historico sin filtro">Exportar Gastos</a>
+@if($permiso[0]->edit==1)
+  <a class="btn btn-info"  href="{{ route('taxi.edita', $taxi->id) }}">Editar</a>
+@endif
+@if($permiso[0]->create==1)
+  <a class="btn btn-primary"  href="{{ route('taxi.reporta', $taxi->id) }}">Reportar</a>
+@endif
+@if($reportePermiso[0]->create==1)
+  <a class="btn btn-success" style="text-transform: none;" href="{{route('taxi.excel', $taxi->id)}}" title="Se bajara el historico sin filtro">Exportar Ingresos y Gastos</a>
+  <a class="btn btn-success" style="text-transform: none;" href="{{route('taxi.excelGastos', $taxi->id)}}" title="Se bajara el historico sin filtro">Exportar Gastos</a>
+@endif
 <div id="cabecera">
   <h3>Detalle del taxi {{$taxi->plate}}:</h3>
   <div id="reportes" style="display: block;">
@@ -43,18 +49,22 @@
                 {{$reporte->produced}}
               </td>
               <td>
-                {{$reporte->expenses}}
+                @php($ruta= "/detalle/" .$taxi->id. "/gastos/" . $reporte->week)
+                <a href="{{$ruta}}">
+                  {{$reporte->expenses}}
+                </a>
               </td>
               <td>
                 {{$reporte->payment}}
               </td>
               <td>
-                <form action="{{route('taxi.eliminar', $reporte->id)}}" method="post" class="d-inline">
-                  @method('DELETE')
-                  @csrf
-                  <button style="width: 30px; height: 30px" class="btn btn-sm"><i class="fa fa-trash" aria-hidden="true"></i></button>
-                        </form>
-                <a href="{{ route('taxi.eliminar', $reporte->id) }}" style="text-decoration: none; color: black"></a>
+                @if($permiso[0]->delete==1)
+                  <form action="{{route('taxi.eliminar', $reporte->id)}}" method="post" class="d-inline">
+                    @method('DELETE')
+                    @csrf
+                    <button style="width: 30px; height: 30px" class="btn btn-sm"><i class="fa fa-trash" aria-hidden="true"></i></button>
+                  </form>
+                @endif
               </td>
             </tr>
           @endforeach

@@ -84,7 +84,7 @@
           <div class="fomr-group">
             <label>Prioridad</label>
             <select name="prioridad" id="prioridad" class="form-control" required>
-              <option disabled>Seleccione la prioridad</option>
+              <option disabled value="">Seleccione la prioridad</option>
               @if($event->priority==3)
                 <option value="3" selected>Bajo</option>
                 <option value="2">Medio</option>

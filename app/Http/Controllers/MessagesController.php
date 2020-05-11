@@ -27,8 +27,14 @@ class MessagesController extends Controller
         $notificaciones = App\Notification::get();
 
         $opcion = "todas";
-        
-    	return view('buzon', compact('mensajes', 'notificaciones', 'opcion', 'vehiculos'));
+
+        $permiso = App\Permission::where([['menu', '=', 19], ['profile', '=', Auth::user()->profile]])->get();
+
+        if ($permiso[0]->read) {
+            return view('buzon', compact('mensajes', 'notificaciones', 'opcion', 'vehiculos'));
+        }else{
+            return redirect('home')->with('error', 'No tienes permisos para este contenido');
+        }
     }
 
     public function leido(Request $request){
@@ -83,8 +89,14 @@ class MessagesController extends Controller
             ->get();
 
         $opcion = "leidas";
-        
-        return view('buzon', compact('mensajes', 'notificaciones', 'opcion', 'vehiculos'));
+
+        $permiso = App\Permission::where([['menu', '=', 19], ['profile', '=', Auth::user()->profile]])->get();
+
+        if ($permiso[0]->read) {
+            return view('buzon', compact('mensajes', 'notificaciones', 'opcion', 'vehiculos'));
+        }else{
+            return redirect('home')->with('error', 'No tienes permisos para este contenido');
+        }
     }
 
     public function porLeer(){
@@ -108,6 +120,12 @@ class MessagesController extends Controller
 
         $opcion = "pendientes";
         
-        return view('buzon', compact('mensajes', 'notificaciones', 'opcion', 'vehiculos'));
+        $permiso = App\Permission::where([['menu', '=', 19], ['profile', '=', Auth::user()->profile]])->get();
+
+        if ($permiso[0]->read) {
+            return view('buzon', compact('mensajes', 'notificaciones', 'opcion', 'vehiculos'));
+        }else{
+            return redirect('home')->with('error', 'No tienes permisos para este contenido');
+        }
     }
 }

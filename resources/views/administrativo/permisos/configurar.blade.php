@@ -37,7 +37,7 @@
 							</div>
 							<div class="accordion-panel tab-collapsed">
 								<div class="accordion-panel-content">
-									<select style="text-transform: capitalize" name="{{$menus[$i]->id}}[]" class="custom-select col-9" multiple="multiple" style="">
+									<select style="text-transform: capitalize" name="{{$menus[$i]->id}}[]" class="custom-select col-9" multiple="multiple" style="" size="5">
 										<option style="text-transform: capitalize" value="vaciar">Vaciar</option>
 										@if(!$perfil->isEmpty())
 											@foreach($perfil as $per)
@@ -96,7 +96,7 @@
 							</div>
 							<div class="accordion-panel tab-collapsed">
 								<div class="accordion-panel-content">
-									<select style="text-transform: capitalize" name="{{$menus[$i+1]->id}}[]" class="custom-select col-9" multiple="multiple" style="">
+									<select style="text-transform: capitalize" name="{{$menus[$i+1]->id}}[]" class="custom-select col-9" multiple="multiple" style="" size="5">
 										<option style="text-transform: capitalize" value="vaciar">Vaciar</option>
 										@if(!$perfil->isEmpty())
 											@foreach($perfil as $per)
@@ -155,7 +155,7 @@
 							</div>
 							<div class="accordion-panel tab-collapsed">
 								<div class="accordion-panel-content">
-									<select style="text-transform: capitalize" name="{{$menus[$i+2]->id}}[]" class="custom-select col-9" multiple="multiple" style="">
+									<select style="text-transform: capitalize" name="{{$menus[$i+2]->id}}[]" class="custom-select col-9" multiple="multiple" style="" size="5">
 										<option style="text-transform: capitalize" value="vaciar">Vaciar</option>
 										@if(!$perfil->isEmpty())
 											@foreach($perfil as $per)
@@ -184,7 +184,6 @@
 												@endif
 			        						@endforeach
 			        					@else
-			        						<option style="text-transform: capitalize" value="vaciar">Vaciar</option>
 			        						<option style="text-transform: capitalize" value="ver" >Ver</option>
 			        						<option style="text-transform: capitalize" value="crea" >Crear</option>
 			        						<option style="text-transform: capitalize" value="edita" >Editar</option>

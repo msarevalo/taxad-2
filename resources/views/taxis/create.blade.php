@@ -12,7 +12,7 @@
                 <label for="placa" class="col-md-4 col-form-label text-md-right">{{ __('Placa') }}</label>
 
                 <div class="col-md-6">
-                    <input id="placa" type="text" class="form-control @error('placa') is-invalid @enderror" name="placa" value="{{ old('placa') }}" required autocomplete="placa" autofocus pattern="[A-Z]{3}\d{3}" title="Recuerde que son 3 letras en mayuscula y 3 numeros. &#10; Ejm: AAA000">
+                    <input id="placa" type="text" class="form-control @error('placa') is-invalid @enderror" name="placa" value="{{ old('placa') }}" required autocomplete="placa" autofocus pattern="[A-Z]{3,3}\d{3,3}" title="Recuerde que son 3 letras en mayuscula y 3 numeros. &#10; Ejm: AAA000">
 
                     @error('document')
                         <span class="invalid-feedback" role="alert">
@@ -27,7 +27,7 @@
 
                 <div class="col-md-6">
                     <select class="form-control mb-2" name="marca" required style="text-transform: capitalize">
-                        <option selected disabled>Seleccione una marca</option>
+                        <option selected disabled value="">Seleccione una marca</option>
                         @foreach($marcas as $marca)
                             <option style="text-transform: capitalize" value="{{$marca->id}}">{{$marca->brand}}</option>
                         @endforeach

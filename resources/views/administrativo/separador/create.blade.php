@@ -33,7 +33,7 @@
 
                 <div class="col-md-6">
                     <select class="form-control mb-2" name="menu" id="menu" required style="text-transform: capitalize">
-                        <option disabled selected>Seleccione una opción</option>
+                        <option disabled selected value="">Seleccione una opción</option>
                         @foreach($padres as $padre)
                             @if($padre->name!="Cerrar Sesión")
                                 <option style="text-transform: capitalize" value="{{$padre->id}}" >{{$padre->name}}</option>

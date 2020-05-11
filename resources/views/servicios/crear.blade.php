@@ -12,8 +12,8 @@
             <label for="tipo" class="col-md-4 col-form-label text-md-right">{{ __('Tipo') }}</label>
 
             <div class="col-md-6">
-                <select class="form-control mb-2" name="tipo" required style="text-transform: capitalize">
-                    <option selected disabled>Seleccione un tipo de servicio</option>
+                <select class="form-control mb-2" name="tipo" required style="text-transform: capitalize" autofocus>
+                    <option selected disabled value="">Seleccione un tipo de servicio</option>
         	        @foreach($tipos as $tipo)
                         <option style="text-transform: capitalize" value="{{$tipo->id}}">
                           	{{$tipo->name}}
@@ -27,7 +27,7 @@
             <label for="nombre" class="col-md-4 col-form-label text-md-right">Nombre de Contacto</label>
 
             <div class="col-md-6">
-                <input id="nombre" type="text" class="form-control @error('nombre') is-invalid @enderror" name="nombre" value="{{ old('nombre') }}" required autocomplete="nombre" autofocus>
+                <input id="nombre" type="text" class="form-control @error('nombre') is-invalid @enderror" name="nombre" value="{{ old('nombre') }}" required autocomplete="nombre">
 
                 @error('nombre')
                     <span class="invalid-feedback" role="alert">

@@ -34,7 +34,7 @@
 
                 <div class="col-md-6">
                     <select id="categoria" class="form-control @error('perfil') is-invalid @enderror" name="categoria" value="{{ old('categoria') }}" required autocomplete="percategoriafil">
-                        <option selected disabled>Seleccione una categoria</option>
+                        <option selected disabled value="">Seleccione una categoria</option>
                         @foreach($categorias as $categoria)
                             @if($categoria->id==$descripcion->category)
                                 <option value="{{$categoria->id}}" selected>{{$categoria->category}}</option>

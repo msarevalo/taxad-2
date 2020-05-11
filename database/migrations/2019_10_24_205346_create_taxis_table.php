@@ -16,7 +16,7 @@ class CreateTaxisTable extends Migration
         Schema::create('taxis', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('plate')->unique();
-            $table->string('brand');
+            $table->integer('brand');
             $table->string('makes');
             $table->integer('serie');
             $table->integer('state');

@@ -78,7 +78,7 @@
           <div class="fomr-group">
             <label>Prioridad</label>
             <select name="prioridad" id="prioridad" class="form-control" required>
-              <option selected disabled>Seleccione la prioridad</option>
+              <option selected disabled value="">Seleccione la prioridad</option>
               <option value="3">Bajo</option>
               <option value="2">Medio</option>
               <option value="1">Alta</option>

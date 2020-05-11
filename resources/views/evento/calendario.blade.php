@@ -3,8 +3,6 @@
 <title>Taxad | Calendario</title>
 
 @section('formulario')
-<html>
-  <head>  
     <style>
     .header-col{
       background: #E3E9E5;
@@ -48,9 +46,6 @@
       width: 30px;
     }
     </style>
-
-  </head>
-  <body>
 
     <div class="container">
       <p class="lead">
@@ -160,8 +155,5 @@
           </tr>
         </tbody>
       </table>
-    </div> <!-- /container -->
-
-  </body>
-</html>
+    </div>
 @endsection

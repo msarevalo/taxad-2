@@ -20,11 +20,23 @@ class CalendarController extends Controller
 
     
     public function calendario(){
+      $permiso = App\Permission::where([['menu', '=', 18], ['profile', '=', Auth::user()->profile]])->get();
+
+      if ($permiso[0]->read) {
         return view('calendar');
+      }else{
+            return redirect('home')->with('error', 'No tienes permisos para este contenido');
+      }
     }
 
     public function formulario(){
-      return view("evento/form");
+      $permiso = App\Permission::where([['menu', '=', 18], ['profile', '=', Auth::user()->profile]])->get();
+
+      if ($permiso[0]->create) {
+        return view("evento/form");
+      }else{
+            return redirect('home')->with('error', 'No tienes permisos para este contenido');
+      }
     }
 
     public function crearEvento(Request $request){
@@ -72,27 +84,44 @@ class CalendarController extends Controller
 
         $evento->state = '0';
 
-        $evento->save();
+        $permiso = App\Permission::where([['menu', '=', 18], ['profile', '=', Auth::user()->profile]])->get();
 
-        return redirect('calendario');
+        if ($permiso[0]->delete) {
+          $evento->save();
+          return redirect('calendario');
+        }else{
+          return redirect('home')->with('error', 'No tienes permisos para este contenido');
+        }
     }
 
     public function detalles($id){
 
       $event = App\Event::find($id);
 
-      return view("evento/evento",[
+      $permiso = App\Permission::where([['menu', '=', 18], ['profile', '=', Auth::user()->profile]])->get();
+
+      if ($permiso[0]->read) {
+        return view("evento/evento",[
         "event" => $event
       ]);
+      }else{
+        return redirect('home')->with('error', 'No tienes permisos para este contenido');
+      }
 
     }
 
     public function editaCalendario($id){
         $event = App\Event::find($id);
 
-        return view("evento/edit",[
+        $permiso = App\Permission::where([['menu', '=', 18], ['profile', '=', Auth::user()->profile]])->get();
+
+        if ($permiso[0]->edit) {
+          return view("evento/edit",[
             "event" => $event
         ]);
+        }else{
+          return redirect('home')->with('error', 'No tienes permisos para este contenido');
+        }
     }
 
     public function editarCalendario(Request $request, $id){
@@ -128,11 +157,17 @@ class CalendarController extends Controller
        $mespanish = $this->spanish_month($mes);
        $mes = $data['month'];
 
-       return view("evento/calendario",[
-         'data' => $data,
-         'mes' => $mes,
-         'mespanish' => $mespanish
-       ]);
+       $permiso = App\Permission::where([['menu', '=', 18], ['profile', '=', Auth::user()->profile]])->get();
+
+        if ($permiso[0]->read) {
+          return view("evento/calendario",[
+            'data' => $data,
+            'mes' => $mes,
+            'mespanish' => $mespanish
+          ]);
+        }else{
+          return redirect('home')->with('error', 'No tienes permisos para este contenido');
+        }
 
    }
 

@@ -11,7 +11,7 @@
 
             <div class="col-md-6">
                 <select id="tipo" class="form-control @error('tipo') is-invalid @enderror" name="tipo" value="{{ old('tipo') }}" required autocomplete="tipo">
-                    <option selected disabled>Seleccione un tipo de documento</option>
+                    <option selected disabled value="">Seleccione un tipo de documento</option>
                     @foreach($tipos as $tipo)
                         <option value="{{$tipo->id}}">{{$tipo->type}}</option>
                     @endforeach

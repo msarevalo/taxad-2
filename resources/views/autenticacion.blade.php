@@ -1,7 +1,13 @@
 <?php
-include '..\App\Http\Controllers\MenuController.php';
-$menu = $items->menus();
-$separa = $items->separador();
+//require "..\App\Http\Controllers\MenuController.php";
+//include '..\App\Http\Controllers\MenuController.php';
+$menu = DB::table('menus')
+            ->join('permissions', 'permissions.menu', '=', 'menus.id')
+            ->select('menus.submenu as submenu', 'menus.route as ruta', 'menus.class as class', 'menus.name as nombre', 'menus.id as id')
+            ->where([['permissions.read', '=', 1], ['menus.submenu', '=', 0], ['permissions.profile', '=', Auth::user()->profile]])
+            ->orderby('menus.order', 'asc')->orderby('menus.id', 'asc')
+            ->get();
+$separa = App\Separator::where('state', '=', 1)->get();
 ?>
 
 <!doctype html>
@@ -187,7 +193,12 @@ $separa = $items->separador();
                 </a>
                 <div id='{{$ruta}}' class="collapse sidebar-submenu">
                     <?php
-                        $hijos = $items->hijos($menu[$i]->id);
+                    $hijos = DB::table('menus')
+                        ->join('permissions', 'permissions.menu', '=', 'menus.id')
+                        ->select('menus.submenu as submenu', 'menus.route as ruta', 'menus.class as class', 'menus.name as nombre', 'menus.id as id', 'menus.parent as padre')
+                        ->where([['permissions.read', '=', 1], ['menus.submenu', '=', 1], ['permissions.profile', '=', Auth::user()->profile], ['parent', '=', $menu[$i]->id]])
+                        ->orderby('menus.order', 'asc')->orderby('menus.id', 'asc')
+                        ->get();
                         for ($j=0; $j < sizeof($hijos); $j++):
                             if ($menu[$i]->id==$hijos[$j]->padre) {
                                 
